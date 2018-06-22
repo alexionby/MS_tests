@@ -49,7 +49,7 @@ class Person(db.Model):
 
 class Patient(Person):
 
-
+    id = db.Column(db.Integer, db.ForeignKey('person.id'), primary_key=True)
     birth_date = db.Column(db.DateTime,default=None)
     sex = db.Column(db.Boolean)
 
@@ -59,10 +59,11 @@ class Patient(Person):
 
     def __repr__(self):
         #return "id {}; name: {}; birth: {}".format(self.id, self.fname, self.birth_date)
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}        
+        return str({c.name: getattr(self, c.name) for c in self.__table__.columns})        
 
 class Doctor(Person):
 
+    id = db.Column(db.Integer, db.ForeignKey('person.id'), primary_key=True)
     clinic = db.Column(db.Integer)
     __mapper_args__ = {
         'polymorphic_identity':'doctor'
@@ -70,7 +71,7 @@ class Doctor(Person):
 
     def __repr__(self):
         #return "id {}; name: {}; birth: {}".format(self.id, self.fname, self.clinic)
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return str({c.name: getattr(self, c.name) for c in self.__table__.columns})
 
 
 class Visit(db.Model):
