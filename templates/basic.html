@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    {% block title %}
+
+    {% endblock %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}">
+  </head>
+
+    {% block body %}{% endblock %}
+
+  {% block script %}{% endblock %}
+  
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/html2canvas.js') }}"></script>
+</html>

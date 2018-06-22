@@ -1,0 +1,224 @@
+{% extends "basic.html" %}
+
+{% block title %}
+
+<title>HADS</title>
+
+{% endblock%}
+
+{% block body %}
+
+  <div class="center">
+
+  <h2>Hospital Anxiety and Depression Scale (HADS)</h2>
+
+  <form name="mainForm" onsubmit="save_screen(this); return false" action="{{ url_for('index') }}" method="post">
+
+      <div style="display: none;">
+          {% include 'pre_info.html' %}
+      </div>
+
+        <h3>Инструкция</h3>
+
+        <p>Выберите ответ, который в наибольшей степени соответствует Вашему самочувствию на прошлой неделе. Не раздумывайте долго над ответом, ваша первая реакция будет лучшей. </p>
+
+        <h3>Вопросы:</h3>
+        <table>
+         <tr>
+           <th></th>
+           <th>Варианты ответа:</th>
+         </tr>
+         <tr>
+           <th>Я напряжен, мне не по себе:</th>
+           <td>
+             <select name="q1" required>
+               <option disabled selected value> Выберите ответ </option>
+               <option value="3">Большую часть времени</option>
+               <option value="2">Много времени</option>
+               <option value="1">Время от времени</option>
+               <option value="0">Совсем нет</option>
+             </select>
+           </td>
+         </tr>
+         <tr>
+           <th>Мне кажется, что все делаю очень медленно:</th>
+           <td>
+             <select name="q2" required>
+               <option disabled selected value> Выберите ответ </option>
+               <option value="3">Почти все время</option>
+               <option value="2">Очень часто</option>
+               <option value="1">Иногда</option>
+               <option value="0">Совсем нет</option>
+             </select>
+           </td>
+         </tr>
+         <tr>
+           <th>То, что приносило удовольствие, и сейчас вызывает такое же чувство: </td>
+           <td>
+             <select name="q3" required>
+               <option disabled selected value> Выберите ответ </option>
+               <option value="0">Определенно, это так</option>
+               <option value="1">Наверное, это так</option>
+               <option value="2">Лишь в очень малой степени это так</option>
+               <option value="3">Это совсем не так</option>
+             </select>
+           </td>
+         </tr>
+         <tr>
+           <th>Я испытываю внутреннее напряжение: </td>
+           <td>
+             <select name="q4" required>
+               <option disabled selected value> Выберите ответ </option>
+               <option value="0">Совсем нет</option>
+               <option value="1">Иногда</option>
+               <option value="2">Часто</option>
+               <option value="3">Очень часто</option>
+             </select>
+           </td>
+         </tr>
+         <tr>
+           <th>Я испытываю страх, кажется, будто что-то ужасное может вот-вот случиться: </td>
+           <td>
+             <select name="q5" required>
+               <option disabled selected value> Выберите ответ </option>
+               <option value="3">Определённо так и страх очень сильный</option>
+               <option value="2">Это так, но страх не очень сильный</option>
+               <option value="1">Иногда, но это меня не беспокоит</option>
+               <option value="0">Совсем нет</option>
+             </select>
+           </td>
+         </tr>
+         <tr>
+           <th>Я не слежу за своей внешностью: </td>
+           <td>
+             <select name="q6" required>
+               <option disabled selected value> Выберите ответ </option>
+               <option value="3">Определенно это так</option>
+               <option value="2">Я не уделяю столько времени, сколько нужно</option>
+               <option value="1">Возможно, стал меньше уделять времени</option>
+               <option value="0">Я слежу за собой так же, как и раньше</option>
+             </select>
+           </td>
+        </tr>
+        <tr>
+          <th>Я способен рассмеяться и видеть смешное: </td>
+          <td>
+            <select name="q7" required>
+              <option disabled selected value> Выберите ответ </option>
+              <option value="0">Определенно это так</option>
+              <option value="1">Наверное, это так</option>
+              <option value="2">Лишь в очень малой степени это так</option>
+              <option value="3">Совсем нет</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Я испытываю неусидчивость, словно мне постоянно нужно двигаться: </td>
+          <td>
+            <select name="q8" required>
+              <option disabled selected value> Выберите ответ </option>
+              <option value="3">Определенно это так</option>
+              <option value="2">Наверное, это так</option>
+              <option value="1">Лишь в очень малой степени это так</option>
+              <option value="0">Совсем нет</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Беспокойные мысли крутятся в голове: </td>
+          <td>
+            <select name="q9" required>
+              <option disabled selected value> Выберите ответ </option>
+              <option value="3">Постоянно</option>
+              <option value="2">Большую часть времени</option>
+              <option value="1">Время от времени и не так часто</option>
+              <option value="0">Только иногда</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Я считаю, что мои дела принесут удовлетворение: </td>
+          <td>
+            <select name="q10" required>
+              <option disabled selected value> Выберите ответ </option>
+              <option value="0">Точно так же, как и обычно</option>
+              <option value="1">Но не в такой степени, как раньше</option>
+              <option value="2">Определенно меньше, чем обычно</option>
+              <option value="3">Совсем так не считаю</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Я испытываю бодрость: </td>
+          <td>
+            <select name="q11" required>
+              <option disabled selected value> Выберите ответ </option>
+              <option value="3">Совсем не испытываю</option>
+              <option value="2">Очень редко</option>
+              <option value="1">Иногда</option>
+              <option value="0">Большую часть времени</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>У меня бывает внезапное чувство паники: </td>
+          <td>
+            <select name="q12" required>
+              <option disabled selected value> Выберите ответ </option>
+              <option value="3">Очень часто</option>
+              <option value="2">Довольно часто</option>
+              <option value="1">Не так уж часто</option>
+              <option value="0">Совсем нет</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Я легко могу сесть и расслабиться: </td>
+          <td>
+            <select name="q13" required>
+              <option disabled selected value> Выберите ответ </option>
+              <option value="0">Определенно это так</option>
+              <option value="1">Наверное, это так</option>
+              <option value="2">Лишь в очень малой степени это так</option>
+              <option value="3">Совсем нет</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Я получаю удовольствие от хорошей книги, радиопередачи или ТВ: </td>
+          <td>
+            <select name="q14" required>
+              <option disabled selected value> Выберите ответ </option>
+              <option value="0">Часто</option>
+              <option value="1">Иногда</option>
+              <option value="2">Редко</option>
+              <option value="3">Очень редко</option>
+            </select>
+          </td>
+        </tr>
+
+        </table>
+
+         <h4>Результаты:</h4>
+
+         <div class="results">
+           <label for="hads_dep">Депрессия =</label>
+           <input id="hads_dep" type="text" name="hads_dep">
+
+           <label for="hads_anx">Тревога =</label>
+           <input id="hads_anx" type="text" name="hads_anx">
+         </div>
+
+         <div>
+           <button type="submit" id="excel_btn">Сохранить</button>
+         </div>
+         </form>
+
+    </div>
+{% endblock %}
+
+{% block script %}
+
+  <script src="{{ url_for('static', filename='js/hads.js') }}"></script>
+
+{% endblock %}

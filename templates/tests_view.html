@@ -1,0 +1,31 @@
+{% extends "basic.html" %}
+
+{% block title %}
+
+    <title>Проведенные тесты</title>
+    <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/materialize/materialize.min.css')}}">
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <ul class="collapsible">
+            {% for test in tests %}
+            <li>
+                <div class="collapsible-header">{{ test.type }}</div>
+                <div class="collapsible-body">
+                    <!--<span>Lorem ipsum dolor sit amet.</span>-->
+                    <img class="center-image" src={{ test.screenshot_path|screen_path }} />
+                    <!--<img src="{{ url_for('static', filename = test.screenshot_path | screen_path ) }}" />-->
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/materialize/materialize.min.js') }}"></script>
+{% endblock %}

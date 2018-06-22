@@ -1,0 +1,110 @@
+{% extends "basic.html" %}
+
+{% block title %}
+
+<title>25 Foot</title>
+<style>
+
+  div {
+    width: 480px;
+    margin: auto;
+    padding-top: 10px;
+  }
+
+  button {
+    float: right;
+  }
+
+  textarea {
+    width: 98.5%;
+  }
+
+</style>
+
+{% endblock%}
+
+{% block body %}
+
+  <div class="center">
+
+    <h2>25 Foot</h2>
+
+    <form name="mainForm" onsubmit="save_screen(this); return false" action="{{ url_for('index') }}" method="post">
+
+      <div style="display: none;">
+          {% include 'pre_info.html' %}
+      </div>
+      
+      <fieldset>
+        <legend>Результаты измерений</legend>
+        <br />
+        <span>Дополнительные приспособления для ходьбы:</span>
+        <div>
+          <input type="radio" name="foot25_tools" value="Не использовались" required>
+          <label for="foot25_tools"><b>Не использовались</b></label>
+        </div>
+        <div>
+          <input type="radio" name="foot25_tools" value="Односторонняя поддержка" required>
+          <label for="foot25_tools">Односторонняя поддержка</label>
+        </div>
+        <div>
+          <input type="radio" name="foot25_tools" value="Двухсторонняя поддержка" required>
+          <label for="foot25_tools">Двухсторонняя поддержка</label>
+        </div>
+        <div>
+          <input type="radio" name="foot25_tools" value="Трость" required>
+          <label for="foot25_tools">Трость</label>
+        </div>
+        <div>
+            <input type="radio" name="foot25_tools" value="Две трости" required>
+            <label for="foot25_tools">Две трости</label>
+        </div>
+        <div>
+          <input type="radio" name="foot25_tools" value="Костыль" required>
+          <label for="foot25_tools">Костыль</label>
+        </div>
+        <div>
+          <input type="radio" name="foot25_tools" value="Два костыля" required>
+          <label for="foot25_tools">Два костыля</label>
+        </div>
+        <div>
+          <input type="radio" name="foot25_tools" value="Трость и костыль" required>
+          <label for="foot25_tools">Трость и костыль</label>
+        </div>
+        <div>
+          <input type="radio" name="foot25_tools" value="Ходунки на колесах" required>
+          <label for="foot25_tools">Ходунки на колесах</label>
+        </div>
+        <br/>
+        <div id="try1">
+          <span>Попытка 1</span>
+          <input name="foot25_try1" required>
+          <span>сек</span>
+        </div>
+
+        <div id="try2">
+          <span>Попытка 2</span>
+          <input name="foot25_try2" required>
+          <span>сек</span>
+        </div>
+
+        <div>
+          <p>Примечания</p>
+          <textarea name="foot25_addition" cols="40" rows="5"></textarea>
+        </div>
+
+    </fieldset>
+
+      <div>
+        <button type="submit" id="excel_btn">Сохранить</button>
+      </div>
+    </form>
+
+  </div>
+{% endblock %}
+
+{% block script %}
+
+<script src="{{ url_for('static', filename='js/foot25.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends "basic.html" %}
+
+{% block title %}
+
+<title>9 HPT</title>
+<style>
+  div {
+    width: 480px;
+    margin: auto;
+    padding-top: 10px;
+  }
+
+  button {
+    float: right;
+  }
+
+  textarea {
+    width: 98.5%;
+  }
+
+  label, label + input {
+    float: right;
+  }
+
+
+</style>
+
+{% endblock%}
+
+{% block body %}
+
+  <div class="center">
+
+    <h2>9 HPT</h2>
+
+    <form name="mainForm" onsubmit="save_screen(this); return false" action="{{ url_for('index') }}" method="post">
+
+      <div style="display: none;">
+          {% include 'pre_info.html' %}
+      </div>
+
+      <fieldset>
+        <legend>Результаты измерений</legend>
+      <div>
+        <span>Доминантная рука</span>
+        <label for="hpt9_hand">Правая</label><input type="radio" name="hpt9_hand" value="right">
+        <label for="hpt9_hand">Левая</label><input type="radio" name="hpt9_hand" value="left">
+      </div>
+
+      <div id="try1">
+        <span>Попытка 1:</span>
+        <input name="hpt9_main_hand_1" required>
+      </div>
+      <div id="try2">
+        <span>Попытка 2:</span>
+        <input name="hpt9_main_hand_2" required>
+      </div>
+      <div>
+        <p>Если попытка не была выполнена, поясните причины:</p>
+        <textarea name="hpt9_note_main" cols="40" rows="5" required ></textarea>
+      </div>
+
+      <p>Недоминантная рука</p>
+      <div id="try3">
+        <span>Попытка 1:</span>
+        <input name="hpt9_sec_hand_1" required>
+      </div>
+      <div id="try4">
+        <span>Попытка 2:</span>
+        <input name="hpt9_sec_hand_2" required>
+      </div>
+      <div>
+        <p>Если попытка не была выполнена, поясните причины:</p>
+        <textarea name="hpt9_note_sec" cols="40" rows="5" required></textarea>
+      </div>
+
+      <div>
+        <button type="submit" id="excel_btn">Сохранить</button>
+      </div>
+    </form>
+
+  </div>
+{% endblock %}
+
+{% block script %}
+
+<script src="{{ url_for('static', filename='js/hpt9.js') }}"></script>
+
+{% endblock %}

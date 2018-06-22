@@ -1,0 +1,239 @@
+{% extends "basic.html" %}
+
+{% block title %}
+
+  <title>Тестирование</title>
+  <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/materialize/materialize.min.css')}}">
+
+{% endblock %}
+
+{% block body %}
+
+<h2 class="red-text text-lighten-2">Тестирование</h2>
+
+<div class="container">
+  <div id="index_tabs" class="row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s6"><a href="#test1">Поиск визита</a></li>
+        <li class="tab col s6"><a class="active" href="#test2">Новый визит</a></li>
+      </ul>
+    </div>
+
+    <div id="test1" class="col s12">
+      <form id="search_form" action="{{ url_for('search_visit') }}" method="post">
+        <h4 class="red-text text-lighten-1">Параметры поиска</h4>
+        <div class="whitecard pad-10">
+          <h5 class="red-text text-lighten-2 center-align">Данные пациента:</h5>
+          <div class="input-field col s4">
+            <input name="sname" type="text">
+            <label for="sname">Фамилия</label>
+          </div>
+          <div class="input-field col s4">
+            <input name="fname" type="text">
+            <label for="fname">Имя</label>
+          </div>
+          <div class="input-field col s4">
+            <input name="lname" type="text">
+            <label for="lname">Отчество</label>
+          </div>
+
+          <h5 class="red-text text-lighten-2 center-align">Примерная дата визита:</h5>
+
+          <div class="input-field col s6">
+            <input name="from_date" type="date">
+            <label for="from_date">От</label>
+          </div>
+
+          <div class="input-field col s6">
+            <input name="to_date" type="date">
+            <label for="to_date">До</label>
+          </div>
+
+          <div class="center-align"><a id="search" class="waves-effect waves-light btn-large">Поиск</a></div>
+
+        </form>
+      </div>
+
+      <h4 class="red-text text-lighten-1">Результаты</h4>
+        <div class="whitecard pad-5">
+          <ul id="search_results" class="collection">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!--/////////////////////////////////-->
+
+    <div id="test2" class="col s12">
+      <h4 class="red-text text-lighten-1">Заполните анкету:</h4>
+      <div class="row flex">
+        <form action="{{ url_for('index') }}" method="get">
+          <div class="col s6">
+            <div class="whitecard pad-10">
+            <h5 class="center-align red-text text-lighten-2">Персональная информация пациента</h5>
+              <div class="input-field">
+                <label for="sname">Фамилия:</label>
+                {% if fname %}
+                <input id="sname" type="text" name="sname" value="{{ sname }}"/>
+                {% else %}
+                <input id="sname" type="text" name="sname"/>
+                {% endif %}
+              </div>
+    
+              <div class="input-field">
+                <label for="fname">Имя:</label>
+                {% if fname %}
+                <input id="fname" type="text" name="fname" value="{{ fname }}"/>
+                {% else %}
+                <input id="fname" type="text" name="fname"/>
+                {% endif %}
+              </div>
+    
+              <div class="input-field">
+                <label for="lname">Отчество:</label>
+                {% if fname %}
+                <input id="lname" type="text" name="lname" value="{{ lname }}"/>
+                {% else %}
+                <input id="lname" type="text" name="lname"/>
+                {% endif %}
+              </div>
+
+              <div class="">
+                <label for="birth_date">Дата рождения:</label>
+                {% if birth_date %}
+                <input id="birth_date" type="date" name="birth_date" value="{{ birth_date }}">
+                {% else %}
+                <input id="birth_date" type="date" name="birth_date">
+                {% endif %}
+              </div>
+              
+              <div class="row botm-0 topp-10 botp-10">
+                <span class="col s2">Пол:</span>
+                <label class="col s5">
+                    {% if gender=='male' %}
+                    <input id="male" type="radio" id="male" name="gender" value="male" {{ 'checked="checked"' }}>
+                    {% else %}
+                    <input id="male" type="radio" id="male" name="gender" value="male">
+                    {% endif %}
+                    <span>Мужской</span>
+                  </label>
+    
+                  <label class="col s5">
+                    {% if gender=='female' %}
+                    <input id="female" type="radio" id="female" name="gender" value="female" {{ 'checked="checked"' }}>
+                    {% else %}
+                    <input id="female" type="radio" id="female" name="gender" value="female">
+                    {% endif %}
+                    <span>Женский</span>
+                  </label>
+              </div>
+
+              <div class="input-field">
+                <label for="addr">Адрес:</label>
+                {% if fname %}
+                <input id="addr" type="text" name="addr" value="{{ addr }}"/>
+                {% else %}
+                <input id="addr" type="text" name="addr"/>
+                {% endif %}
+              </div>
+
+            </div>
+          </div>
+        <div class="col s6">
+          <div class="whitecard pad-10">
+            <h5 class="center-align red-text text-lighten-2">Данные специалиста</h5>
+    
+            <div class="input-field">
+              <label for="spec_sname">Фамилия:</label>
+              {% if spec_fname %}
+              <input id="spec_sname" type="text" name="spec_sname" value="{{ spec_sname }}"/>
+              {% else %}
+              <input id="spec_sname" type="text" name="spec_sname"/>
+              {% endif %}
+            </div>
+    
+            <div class="input-field">
+              <label for="spec_fname">Имя:</label>
+              {% if spec_sname %}
+              <input id="spec_fname" type="text" name="spec_fname" value="{{ spec_fname }}"/>
+              {% else %}
+              <input id="spec_fname" type="text" name="spec_fname"/>
+              {% endif %}
+            </div>
+    
+            <div class="input-field">
+              <label for="spec_lname">Отчество:</label>
+              {% if spec_lname %}
+              <input id="spec_lname" type="text" name="spec_lname" value="{{ spec_lname }}"/>
+              {% else %}
+              <input id="spec_lname" type="text" name="spec_lname"/>
+              {% endif %}
+            </div>
+
+            <div class="input-field">
+              <label for="spec_clinic">Номер поликлиники:</label>
+              {% if spec_lname %}
+              <input id="spec_clinic" type="text" name="spec_clinic" value="{{ spec_clinic }}"/>
+              {% else %}
+              <input id="spec_clinic" type="text" name="spec_clinic"/>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="whitecard pad-10 topm-10">
+            <label for="visit_date">Дата визита:</label>
+            <div class="input-field">
+              {% if visit_date %}
+              <input id="visit_date" type="date" name="visit_date" value="{{ visit_date }}">
+              {% else %}
+              <input id="visit_date" type="date" name="visit_date">
+              {% endif%}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <h4 class="red-text text-lighten-1">Выбор теста</h4>
+
+      <div class="whitecard pad-10">
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+    
+          <h5 class="center-align red-text text-lighten-2">Выберите тест:</h5>
+
+          <ol class="tests_list">
+            <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('hpt_9') }}">9 HPT</button></li>
+            <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('passat_3') }}">PASAT 3</button></li>
+            <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('sf36') }}">SF-36</button></li>
+            <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('memory_test') }}">Symbol Digit Modalities Test  (SDMT)</button></li>
+            <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('hads') }}">Hospital Anxiety and Depression Scale (HADS)</button></li>
+            <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('foot_25') }}">25 Foot</button></li>
+            <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('fsmc') }}">Fatigue Scale for Motor and Cognitive Functions (FSMCF)</button></li>
+            <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('neurostatus') }}">Expanded Disability Status Scale (EDSS)</button></li>
+          </ol>
+        </form>
+    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+    {% endblock %}
+
+    {% block script %}
+
+      <script src="{{ url_for('static', filename='js/materialize/materialize.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+    {% endblock %}

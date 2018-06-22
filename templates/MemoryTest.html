@@ -1,0 +1,78 @@
+{% extends "basic.html" %}
+
+{% block title %}
+
+<title>Memory Test</title>
+
+{% endblock%}
+
+{% block body %}
+
+  <div class="center">
+
+    <h2>Тест памяти</h2>
+
+    <form name="mainForm" onsubmit="save_screen(this); return false" action="{{ url_for('index') }}" method="post">
+
+      <div class="patient_form">
+          {% include 'pre_info.html' %}
+      </div>
+
+      <p>Ключи:</p>
+      <table class="symbols">
+        <tr>
+          <th><img src="{{ url_for('static', filename='img/symb1.png') }}"/></th>
+          <th><img src="{{ url_for('static', filename='img/symb2.png') }}"</th>
+          <th><img src="{{ url_for('static', filename='img/symb3.png') }}"</th>
+          <th><img src="{{ url_for('static', filename='img/symb4.png') }}"</th>
+          <th><img src="{{ url_for('static', filename='img/symb5.png') }}"</th>
+          <th><img src="{{ url_for('static', filename='img/symb6.png') }}"</th>
+          <th><img src="{{ url_for('static', filename='img/symb7.png') }}"</th>
+          <th><img src="{{ url_for('static', filename='img/symb8.png') }}"</th>
+          <th><img src="{{ url_for('static', filename='img/symb9.png') }}"</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>6</td>
+          <td>7</td>
+          <td>8</td>
+          <td>9</td>
+        </tr>
+      </table>
+
+      <!--
+        <p>Тренировочная часть:</p>
+        <table id='train_part'>
+        </table>
+        <button type="button" id='train_start'>Старт</button>
+        <button type="button" id='train_stop'>Стоп</button>
+        <p id="train_result">Результат: <input/></p>
+      -->
+
+      <p>Тестовая часть:</p>
+
+      <table id='test_part'>
+        <tbody>
+
+        <tbody>
+      </table>
+
+      <p style="text-align:center">Всего: <input size="7" type="text" name="memtest_all" required/>&nbsp;Ошибок: <input size="7" type="text" name="memtest_wrong" required/>&nbsp;Верно: <input size="7" type="text" name="memtest_correct" required/></p>
+
+      <div>
+        <button type="submit" id="excel_btn">Сохранить</button>
+      </div>
+    </form>
+
+  </div>
+{% endblock %}
+
+{% block script %}
+
+  <script src="{{ url_for('static', filename='js/memorytest.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+body {
+    background-color: lightblue;
+  }
+
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+
+.formLine {
+
+  label {
+    width: 27%;
+    text-align: left;
+  }
+  
+  input {
+    width: 73%;
+  }
+  
+  input[type="radio"] {
+    width: 2%;
+  }
+}
+
+
+.results {
+  display: flex;
+
+  label {
+    padding: 0px 10px;
+    text-align: right;
+    flex-grow: 0;
+  }
+  
+  input {
+    flex-grow: 1;
+  }
+}
+
+#test_part * {
+  width: 48px;
+  font-size: 24px;
+}
+
+select {
+    width: 100%;
+    background-color: rgba(0,0,0,0);
+    height: 100%;
+    text-align: center;
+    border: none;
+  }
+
+input {
+    &:disabled {
+        background: white;
+    }
+}

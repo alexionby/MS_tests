@@ -1,0 +1,481 @@
+{% extends "basic.html" %}
+
+{% block title %}
+
+<title>Neurostatus scoring</title>
+<style>
+
+  table, td, select {
+    height: 100%;
+    width: 100%;
+  }
+
+</style>
+
+{% endblock%}
+
+{% block body %}
+
+  <div class="center">
+
+    <h2>Expanded Disability Status Scale</h2>
+
+    <form name="mainForm" onsubmit="save_screen(this); return false" action="{{ url_for('index') }}" method="post">
+
+      <div style="display: none;">
+          {% include 'pre_info.html' %}
+      </div>
+
+      <p>Регистрационный бланк для использования при проведении стандартизированного неврологического обследования и оценки неврологического статуса пациента по функциональной шкале Курцтке в расширенной шкале для определения степени инвалидизации при рассеянном склерозе (EDSS)</p>
+
+      <h4>Сводные данные</h4>
+      <table class="layout2-2">
+        <tr>
+          <td>Функция зрения</td>
+          <td><input name="visual" type="" value="0"></td>
+          <td>Способность к передвижению</td>
+          <td><input name="ambulation_score" type="" value="0"></td>
+        </tr>
+        <tr>
+          <td>Функции ствола головного мозга</td>
+          <td><input name="brainstem" type="" value="0"></td>
+          <th colspan="2">Балл по шкале EDSS</th>
+        </tr>
+        <tr>
+          <td>Пирамидные функции</td>
+          <td><input name="pyramidal" type="" value="0"></td>
+          <!--<td colspan="2"><input required name="edss_step"></td>-->
+          <td class="edss_change_event to_fixed"><input required type="range" name="edss_step" min="0" max="10" step="0.5" value="0.0"/></td>
+          <td style="text-align: center;"><span>0.0</span></td>
+        </tr>
+        <tr>
+          <td>Функции мозжечка</td>
+          <td><input name="cerebellar" type="" value="0"></td>
+        </tr>
+        <tr>
+          <td>Сенсорные функции</td>
+          <td><input name="sensory" type="" value="0"></td>
+        </tr>
+        <tr>
+          <td>Функции кишечника и мочевого пузыря</td>
+          <td><input name="bowel_bladder" type="" value="0"></td>
+          <th colspan="2">Подпись</th>
+        </tr>
+        <tr>
+          <td>Церебральные функции</td>
+          <td><input name="cerebral" type="" value="0"></td>
+          <td colspan="2"><input style="background-color:lightgreen;"></td>
+        </tr>
+      </table>
+
+      <h4>Функция зрения</h4>
+      <table class="layout2-3">
+        <tr>
+          <td></td>
+          <td>OD</td>
+          <td>OS</td>
+          <td>Скотома</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="2"/></td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="2"/></td>
+        </tr>
+        <tr>
+          <td>
+            Острота зрения
+            <span style="float:right;padding-right: 10px;">
+                <label for="cs">К</label>
+                <input class="inline-input" type="radio" name="cs">
+                <label for="cs">Б\к</label>
+                <input class="inline-input" type="radio" name="cs">
+            </span>
+          </td>
+          <td><input type="text" size="1"></td>
+          <td><input type="text" size="1"></td>
+          <td>Бледность диска зрительного нерва</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="1"/></td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="1"/></td>
+        </tr>
+        <tr>
+          <td>Поле зрения</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="3"/></td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="3"/></td>
+          <td>Балл по функциональной шкале</td>
+          <td><input type="text" size="1" id="VS_mark"></td>
+          <td><input type="text" size="1"></td>
+        </tr>
+      </table>
+
+      <h4>Функции ствола головного мозга</h4>
+      <table class="layout2-2">
+        <tr>
+          <th colspan="2">Оценка функций черепно-мозговых нервов</th>
+          <td>Нарушения слуха</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+        </tr>
+        <tr>
+          <td>Поражения экстраокулярных мышц</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+          <td>Дизартрия</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="5"/></td>
+        </tr>
+        <tr>
+          <td>Нистагм</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="3"/></td>
+          <td>Дисфагия</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="5"/></td>
+        </tr>
+        <tr>
+          <td>Поражение тройничного нерва</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+          <td>Прочие нарушения, связанные с функциями черепно-мозговых нервов</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+        </tr>
+        <tr>
+          <td>Слабость лицевых мышц</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+          <td>Балл по функциональной шкале</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="5"/></td>
+        </tr>
+      </table>
+
+      <h4>Пирамидные функции</h4>
+      <table class="layout4-3">
+        <tr>
+          <th>Рефлексы</th>
+          <th class="center-letter">П</th>
+          <th class="center-letter">x</th>
+          <th class="center-letter">Л</th>
+          <th colspan="3"></th>
+        </tr>
+        <tr>
+          <td>Рефлекс двуглавой мышцы</td>
+          <td><input type=""></td>
+          <td> 
+            <select>
+              <option value="">&gt;</option>
+              <option value="">&lt;</option>
+              <option value="">&#61;</option>
+            </select>
+          </td>
+          <td><input type=""></td>
+          <td>Мышцы-разгибатели колена</td>
+          <td><input type=""></td>
+          <td><input type=""></td>
+        </tr>
+        <tr>
+          <td>Пястно-лучевой рефлекс</td>
+          <td><input type=""></td>
+          <td> 
+            <select>
+              <option value="">&gt;</option>
+              <option value="">&lt;</option>
+              <option value="">&#61;</option>
+            </select>
+          </td>
+          <td><input type=""></td>
+          <td>Сгибание подошвы (стопа/пальцы ног)</td>
+          <td><input type=""></td>
+          <td><input type=""></td>
+        </tr>
+        <tr>
+          <td>Коленный рефлекс</td>
+          <td><input type=""></td>
+          <td> 
+            <select>
+              <option value="">&gt;</option>
+              <option value="">&lt;</option>
+              <option value="">&#61;</option>
+            </select>
+          </td>
+          <td><input type=""></td>
+          <td>Тыльное сгибание (стопа/пальцы ног)</td>
+          <td><input type=""></td>
+          <td><input type=""></td>
+        </tr>
+        <tr>
+          <td>Подошвенный рефлекс</td>
+          <td><input type=""></td>
+          <td> 
+            <select>
+              <option value="">&gt;</option>
+              <option value="">&lt;</option>
+              <option value="">&#61;</option>
+            </select>
+          </td>
+          <td><input type=""></td>
+          <td>* Позиционная проба (верх. конечности), пронаторный феномен</td>
+          <td><input type=""></td>
+          <td><input type=""></td>
+        </tr>
+        <tr>
+          <td>Кожные рефлексы</td>
+          <td><input type=""></td>
+          <td> 
+            <select>
+              <option value="">&gt;</option>
+              <option value="">&lt;</option>
+              <option value="">&#61;</option>
+            </select>
+          </td>
+          <td><input type=""></td>
+          <td>* Позиционная проба (верх. конечности), супинация</td>
+          <td><input type=""></td>
+          <td><input type=""></td>
+        </tr>
+        <tr>
+          <td>* Ладонно-подбородочный рефлекс (Маринеску-Радовичи)</td>
+          <td><input type=""></td>
+          <td> 
+            <select>
+              <option value="">&gt;</option>
+              <option value="">&lt;</option>
+              <option value="">&#61;</option>
+            </select>
+          </td>
+          <td><input type=""></td>
+          <td>* Позиционная проба (ниж. конечности), неспособность удержать ноги на весу</td>
+          <td><input type=""></td>
+          <td><input type=""></td>
+        </tr>
+        <tr>
+          <th colspan="4">Мышечная сила</th>
+          <td>* Пациент может приподнять только одну ногу (угол подъема в градусах)</td>
+          <td><input type=""></td>
+          <td><input type=""></td>
+        </tr>
+        <tr>
+          <td>Дельтовидная мышца</td>
+          <td><input type=""></td>
+          <td><input disabled type=""></td>
+          <td><input type=""></td>
+          <td colspan="2">* Ходьба на носках</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="2"/></td>
+        </tr>
+        <tr>
+          <td>Двуглавая мышца</td>
+          <td><input type=""></td>
+          <td><input disabled type=""></td>
+          <td><input type=""></td>
+          <td colspan="2">* Ходьба на пятках</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="2"/></td>
+        </tr>
+        <tr>
+          <td>Трехглавая мышца</td>
+          <td><input type=""></td>
+          <td><input disabled type=""></td>
+          <td><input type=""></td>
+          <td colspan="2">* Подпрыгивание на одной ноге</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="3"/></td>
+        </tr>
+        <tr>
+          <td>Мышцы-сгибатели пальцев рук/запястья</td>
+          <td><input type=""></td>
+          <td><input disabled type=""></td>
+          <td><input type=""></td>
+          <th colspan="3">Спастичность</th>
+        </tr>
+        <tr>
+          <td>Мышцы-разгибатели пальцев рук/запяться</td>
+          <td><input type=""></td>
+          <td><input disabled type=""></td>
+          <td><input type=""></td>
+          <td colspan="2">Верхние конечности</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+        </tr>
+        <tr>
+          <td>Мышцы-сгибатели бедра</td>
+          <td><input type=""></td>
+          <td><input disabled type=""></td>
+          <td><input type=""></td>
+          <td colspan="2">Нижние конечности</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+        </tr>
+        <tr>
+          <td>Мышцы-сгибатели колена</td>
+          <td><input type=""></td>
+          <td><input disabled type=""></td>
+          <td><input type=""></td>
+          <td colspan="2">Спастическая походка</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="3"/></td>
+        </tr>
+        <tr>
+          <td colspan="7">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>Общая оценка моторных реакций</td>
+          <td colspan="3"><input type=""></td>
+          <td>Балл по функциональной шкале</td>
+          <td colspan="2"><input type=""></td>
+        </tr>
+      </table>
+
+      <h4>Функции мозжечка</h4>
+      <table class="layout3-3">
+        <tr>
+          <th colspan="3">Оценка функций мозжечка</th>
+          <td style="width:40%">Адиодохокинез (верх. конечности)</td>
+          <td style="width:5%" class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+          <td style="width:5%" class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+        </tr>
+        <tr>
+          <td colspan="2">Тремор головы</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="3"/></td>
+          <td style="width:40%">Адиодохокинез (ниж. конечности)</td>
+          <td style="width:5%" class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+          <td style="width:5%" class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+        </tr>
+        <tr>
+          <td colspan="2">Атаксия туловища</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+          <td colspan="2">Тандемная ходьба</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="2"/></td>
+        </tr>
+        <tr>
+          <th></th>
+          <th class="center-letter">П</th>
+          <th class="center-letter">Л</th>
+          <td colspan="2">Атаксия при ходьбе</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+        </tr>
+        <tr>
+          <td>Тремор/дисметрия (верх. конечности)</td>
+          <td style="width:5%" class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+          <td style="width:5%" class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+          <td colspan="2">Проба Ромберга</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="3"/></td>
+        </tr>
+        <tr>
+          <td>Тремор/дисметрия (ниж. конечности)</td>
+          <td style="width:5%" class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+          <td style="width:5%" class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+          <td colspan="2">Прочие функциональные пробы (например, феномен отдачи)</td>
+          <td class="range_change_event"><p>0</p><input type="range" min="0" max="3"/></td>
+        </tr>
+        <tr>
+          <td colspan="3"></td>
+          <td colspan="2">Балл по функциональной шкале</td>
+          <td><input type=""></td>
+        </tr>
+      </table>
+
+    <h4>Сенсорные функции</h4>
+    <table class="layout2-2">
+      <tr>
+        <th colspan="3">Оценка сенсорных функций</th>
+        <td colspan="2">Проприоцепция (верх. конечности)</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="3"/></td>
+      </tr>
+      <tr>
+        <td colspan="2">Поверхностная чувствительность (верх. конечности)</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="5"/></td>
+        <td colspan="2">Проприоцепция (ниж. конечности)</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="3"/></td>
+      </tr>
+      <tr>
+        <td colspan="2">Поверхностная чувствительность (туловище)</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="5"/></td>
+        <td colspan="2" style="width:45%">* Симптом Лермитта</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="1"/></td>
+      </tr>
+      <tr>
+        <td colspan="2">Поверхностная чувствительность (ниж. конечности)</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="5"/></td>
+        <td colspan="2">* Парестезия (верх. конечности)</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="1"/></td>
+      </tr>
+      <tr>
+        <td colspan="2">Вибрационная чувствительность (верх. конечности)</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="3"/></td>
+        <td colspan="2">* Парестезия (туловище)</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="1"/></td>
+      </tr>
+      <tr>
+        <td colspan="2">Вибрационная чувствительность (ниж. конечности)</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="3"/></td>
+        <td colspan="2">* Парестезия (ниж. конечности)</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="1"/></td>
+      </tr>
+      <tr>
+        <td colspan="3" style="width:50%"></td>
+        <td colspan="2">Балл по функциональной шкале</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="6"/></td>
+      </tr>
+
+    </table>
+
+    <h4>Функции кишечника и мочевого пузыря</h4>
+    <table class="layout2-2">
+      <tr>
+        <td>Задержка мочи</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+        <td colspan="2">Нарушения функции кишечника</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+      </tr>
+      <tr>
+        <td>Императивные позывы к мочеиспусканию и недержание мочи</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+        <td colspan="2">Сексуальная дисфункция</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="4"/></td>
+      </tr>
+      <tr>
+        <td>Катетеризация мочевого пузыря</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="2"/></td>
+        <td style="width:40%">Балл по функциональной шкале</td>
+        <td style="width:5%"><input type="" id="FS_mark"></td>
+        <td style="width:5%"><input type=""></td>
+      </tr>
+    </table>
+
+    <h4>Церебральные функции</h4>
+    <table class="layout2-2">
+      <tr>
+        <th colspan="2">Оценка психического состояния</th>
+        <td>Нарушения мышления</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="5"/></td>
+      </tr>
+      <tr>
+        <td>* Депрессия</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="1"/></td>
+        <td>+ Утомляемость</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="3"/></td>
+      </tr>
+      <tr>
+        <td>* Эйфория</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="1"/></td>
+        <td>Балл по функциональной шкале</td>
+        <td class="range_change_event"><p>0</p><input type="range" min="0" max="5"/></td>
+      </tr>
+    </table>
+
+    <h4>Способность к передвижению</h4>
+    <table class="layout2-2">
+      <tr>
+        <td>Расстояние, которое способен преодолеть пациент (с его слов)</td>
+        <td><input type=""></td>
+        <td>Посторонняя помощь/использование специальных приспособлений</td>
+        <td><input type=""></td>
+      </tr>
+      <tr>
+        <td>Время, за которое пациент преодолевает указанное расстояние (с его слов)</td>
+        <td><input type=""></td>
+        <td>Расстояние (по результатам измерений [в метрах])</td>
+        <td><input type=""></td>
+      </tr>
+      <tr>
+        <td colspan="2"></td>
+        <td>Балл по функциональной шкале</td>
+        <td><input type=""></td>
+      </tr>
+    </table>
+      <div>
+        <button type="submit" id="excel_btn">Сохранить</button>
+      </div>
+    </form>
+
+  </div>
+{% endblock %}
+
+{% block script %}
+
+<script src="{{ url_for('static', filename='js/neurostatus.js') }}"></script>
+
+{% endblock %}

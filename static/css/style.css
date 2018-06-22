@@ -1,0 +1,254 @@
+body {
+  background-color: lightblue;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+h2,h3,h4 {
+  text-align: center;
+}
+
+.formLine {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px;
+}
+
+.whitecard {
+  /*padding: 10px 10%;*/
+  background-color: white;
+}
+
+.topm-10 {
+  margin-top: 10px;
+}
+
+.botm-0 {
+  margin-bottom: 0;
+}
+
+.topp-10 {
+  padding-top: 10px;
+}
+
+.botp-10 {
+  padding-bottom: 10px;
+}
+
+.pad-10 {
+  padding: 10px 10%;
+}
+
+.pad-5 {
+  padding: 1.5% 2%;
+}
+
+.tests_list li button {
+  margin: 5px;
+  width: 100%;
+}
+
+* {
+  font-family: Trebuchet MS, palatino linotype, sans-serif;
+}
+
+p {
+  text-align: center;
+}
+
+.center-image {
+  display: block;
+  margin: auto;
+}
+
+.patient_form {
+  display: none;
+}
+
+table {
+  width: 100%;
+  font-family: Trebuchet MS, palatino linotype, sans-serif;
+  background-color: white;
+}
+
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table th {
+  text-align: left;
+  padding: 5px;
+}
+
+table td {
+  text-align: center;
+}
+
+#excel_btn {
+
+  display: block;
+  margin: 10px auto;
+  padding: 5px 10px;
+
+}
+
+input[type='radio'] {
+  transform: scale(1.25);
+}
+
+.center {
+  width: 980px;
+  margin: auto;
+  background-color: lightblue;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.layout2-2 input[type='range'], .layout4-3 input[type='range'] {
+  height: auto;
+}
+
+.right-border { 
+  border-right: 5px solid blue;
+}
+
+#train_part input , #test_part input {
+  padding: 0;
+  margin: 0;
+}
+
+.test_list button {
+  padding: 5px;
+  width: 90%;
+}
+
+.symbols th, tr {
+  text-align: center;
+  vertical-align: middle;
+}
+
+table.final {
+  min-width: 400px;
+  width: 85%;
+  margin: auto;
+}
+
+table.final td:nth-child(2n+1) {
+  padding-left: 5px;
+  text-align: left;
+}
+
+table.final input {
+  text-align: center;
+}
+
+#test_part, table.symbols {
+  font-size: 24px;
+}
+
+table.layout2-3 tr:nth-child(1) td:nth-child(2), 
+table.layout2-3 tr:nth-child(1) td:nth-child(3) {
+  font-weight: bold;
+}
+
+table.layout2-3 td:nth-child(3n + 1) {
+  padding-left: 5px;
+  text-align: left;
+  width: 40%;
+}
+
+table.layout2-3 td:nth-child(3n + 2) {
+  width: 5%;
+}
+
+table.layout2-3 td:nth-child(3n + 3) {
+  width: 5%;
+}
+
+input.inline-input {
+ width: auto  !important;
+}
+
+.layout2-3 input {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  border: 0;
+  text-align: center;
+  font-size: 18px;
+  background-color: lightcoral;
+}
+
+.layout2-2 td:nth-child(2n) {
+  width: 5%;
+}
+
+.layout2-2 td:nth-child(2n + 1) {
+  width: 45%;
+}
+
+.layout2-2 input {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  border: 0;
+  text-align: center;
+  font-size: 18px;
+  background-color: lightcoral;
+}
+
+td input[type='range'] {
+  background-color: transparent;
+  font-size: 14px;
+}
+
+.layout4-3  td {
+  width: 5%;
+}
+
+.layout4-3 td:nth-child(4n + 1) {
+  width: 35%;
+}
+
+.layout4-3 input, .layout3-3 input {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  border: 0;
+  text-align: center;
+  font-size: 18px;
+  background-color: lightcoral;
+}
+
+.layout3-3  td {
+  width: 5%;
+}
+
+.layout3-3 td:nth-child(3n + 1) {
+  width: 40%;
+}
+
+table.layout2-2 td, table.layout2-3 td, table.layout3-3 td, table.layout4-3 td {
+  text-align: left;
+}
+
+table.layout2-2 input, table.layout2-3 input, table.layout3-3 input, table.layout4-3 input {
+  text-align: center;
+}
+
+th.center-letter {
+  text-align: center;
+}
+
+.range_change_event input[type="range"], .range_change_event p {
+  margin: 0;
+}

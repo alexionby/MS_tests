@@ -1,0 +1,251 @@
+{% extends "basic.html" %}
+
+{% block title %}
+
+<title>FSMC</title>
+
+{% endblock%}
+
+{% block body %}
+
+  <div class="center">
+
+  <h2>Шкала усталости для моторных и когнитивных функций</h2>
+  <h3>(Fatigue Scale for Motor and Cognitive Functions)</h3>
+
+  <form name="mainForm" onsubmit="save_screen(this); return false" action="{{ url_for('index') }}" method="post">
+
+      <div style="display: none;">
+          {% include 'pre_info.html' %}
+      </div>
+
+        <h3>Инструкция</h3>
+
+        <p>Представленный Вам опросник касается проблем повседневной жизни, непосредственно связанных с крайней формой усталости (утомляемости). Эта крайняя форма усталости относится к  подавляющему состоянию вялости, усталости и нехватки энергии, которая наступает внезапно и не связана с какими-либо очевидными внешними причинами. При этом не имеются в виду отдельные эпизоды, которые каждый может испытывать в течение дня после перенапряжения или бессонной ночи!
+        </p>
+        <p>
+Пожалуйста, внимательно прочитайте каждое утверждение. Затем решите, в какой степени каждое утверждение применимо к Вам и Вашей повседневной жизни. Пожалуйста, постарайтесь не давать ответы на основании того, как вы чувствуете себя в настоящий момент. Вместо этого, дайте нам картину того, как вы чувствуете себя в повседневной жизни изо дня в день. Пожалуйста, поставьте крестик в соответствующую клетку (только один крестик напротив каждого утверждения, пожалуйста!)
+        </p>
+
+        <h3>Вопросы:</h3>
+        <table>
+         <tr>
+           <th></th>
+           <th>Никогда</th>
+           <th>Иногда</th>
+           <th>Редко</th>
+           <th>Часто</th>
+           <th>Всегда</th>
+         </tr>
+         <tr>
+           <th>1.	Когда я длительно концентрируюсь, я истощаюсь раньше по сравнению с людьми моего возраста.</td>
+           <td><input type="radio" name="q1" value="1" required></td>
+           <td><input type="radio" name="q1" value="2"></td>
+           <td><input type="radio" name="q1" value="3"></td>
+           <td><input type="radio" name="q1" value="4"></td>
+           <td><input type="radio" name="q1" value="5"></td>
+         </tr>
+         <tr>
+           <th>2.	Когда я испытываю изнеможение, мои движения становятся более неуклюжими и менее координированными.</td>
+           <td><input type="radio" name="q2" value="1" required></td>
+           <td><input type="radio" name="q2" value="2"></td>
+           <td><input type="radio" name="q2" value="3"></td>
+           <td><input type="radio" name="q2" value="4"></td>
+           <td><input type="radio" name="q2" value="5"></td>
+         </tr>
+         <tr>
+           <th>3.	Из-за своих эпизодов изнеможения, я теперь вынужден чаще и/или дольше отдыхать во время физической деятельности, чем раньше.</td>
+           <td><input type="radio" name="q3" value="1" required></td>
+           <td><input type="radio" name="q3" value="2"></td>
+           <td><input type="radio" name="q3" value="3"></td>
+           <td><input type="radio" name="q3" value="4"></td>
+           <td><input type="radio" name="q3" value="5"></td>
+         </tr>
+         <tr>
+           <th>4.	Когда я переживаю приступы изнеможения, я не способен принимать решения.</td>
+           <td><input type="radio" name="q4" value="1" required></td>
+           <td><input type="radio" name="q4" value="2"></td>
+           <td><input type="radio" name="q4" value="3"></td>
+           <td><input type="radio" name="q4" value="4"></td>
+           <td><input type="radio" name="q4" value="5"></td>
+         </tr>
+         <tr>
+           <th>5.	Когда я сталкиваюсь со стрессовой ситуацией, я замечаю, что физически истощаюсь быстрее, чем раньше.</td>
+           <td><input type="radio" name="q5" value="1" required></td>
+           <td><input type="radio" name="q5" value="2"></td>
+           <td><input type="radio" name="q5" value="3"></td>
+           <td><input type="radio" name="q5" value="4"></td>
+           <td><input type="radio" name="q5" value="5"></td>
+         </tr>
+         <tr>
+          <th></th>
+          <th>Никогда</th>
+          <th>Иногда</th>
+          <th>Редко</th>
+          <th>Часто</th>
+          <th>Всегда</th>
+        </tr>
+         <tr>
+           <th>6.	Из-за эпизодов изнеможения, я теперь имею значительно меньше социальных контактов, чем я привык.</td>
+           <td><input type="radio" name="q6" value="1" required></td>
+           <td><input type="radio" name="q6" value="2"></td>
+           <td><input type="radio" name="q6" value="3"></td>
+           <td><input type="radio" name="q6" value="4"></td>
+           <td><input type="radio" name="q6" value="5"></td>
+         </tr>
+         <tr>
+           <th>7.	Из-за моих эпизодов изнеможения, я замечаю, что сейчас мне тяжелее учиться новому, чем раньше.</td>
+           <td><input type="radio" name="q7" value="1" required></td>
+           <td><input type="radio" name="q7" value="2"></td>
+           <td><input type="radio" name="q7" value="3"></td>
+           <td><input type="radio" name="q7" value="4"></td>
+           <td><input type="radio" name="q7" value="5"></td>
+         </tr>
+         <tr>
+           <th>8.	Мои обязанности по работе, изматывают меня умственно быстрее, чем раньше.</td>
+           <td><input type="radio" name="q8" value="1" required></td>
+           <td><input type="radio" name="q8" value="2"></td>
+           <td><input type="radio" name="q8" value="3"></td>
+           <td><input type="radio" name="q8" value="4"></td>
+           <td><input type="radio" name="q8" value="5"></td>
+         </tr>
+         <tr>
+           <th>9.	Особенно сильно я чувствую эпизоды утомляемости в своих мышцах.</td>
+             <td><input type="radio" name="q9" value="1" required></td>
+             <td><input type="radio" name="q9" value="2"></td>
+             <td><input type="radio" name="q9" value="3"></td>
+             <td><input type="radio" name="q9" value="4"></td>
+             <td><input type="radio" name="q9" value="5"></td>
+         </tr>
+         <tr>
+           <th>10. Я стал менее выносливым во время длительной физической активности, чем раньше.</td>
+             <td><input type="radio" name="q10" value="1" required></td>
+             <td><input type="radio" name="q10" value="2"></td>
+             <td><input type="radio" name="q10" value="3"></td>
+             <td><input type="radio" name="q10" value="4"></td>
+             <td><input type="radio" name="q10" value="5"></td>
+         </tr>
+         <tr>
+          <th></th>
+          <th>Никогда</th>
+          <th>Иногда</th>
+          <th>Редко</th>
+          <th>Часто</th>
+          <th>Всегда</th>
+        </tr>
+         <tr>
+           <th>11.	Мои способности к концентрации значительно снижаются, когда я нахожусь в состоянии стресса.</td>
+             <td><input type="radio" name="q11" value="1" required></td>
+             <td><input type="radio" name="q11" value="2"></td>
+             <td><input type="radio" name="q11" value="3"></td>
+             <td><input type="radio" name="q11" value="4"></td>
+             <td><input type="radio" name="q11" value="5"></td>
+         </tr>
+         <tr>
+           <th>12.	Во время моих приступов усталости я менее мотивирован, чтобы начать деятельность, если она требует физических усилий, чем другие.</td>
+             <td><input type="radio" name="q12" value="1" required></td>
+             <td><input type="radio" name="q12" value="2"></td>
+             <td><input type="radio" name="q12" value="3"></td>
+             <td><input type="radio" name="q12" value="4"></td>
+             <td><input type="radio" name="q12" value="5"></td>
+         </tr>
+         <tr>
+           <th>13.	Когда мне жарко, мое мышление становится все медленнее и медленнее.</td>
+             <td><input type="radio" name="q13" value="1" required></td>
+             <td><input type="radio" name="q13" value="2"></td>
+             <td><input type="radio" name="q13" value="3"></td>
+             <td><input type="radio" name="q13" value="4"></td>
+             <td><input type="radio" name="q13" value="5"></td>
+         </tr>
+         <tr>
+           <th>14.	Во время приступов усталости мои движения становятся значительно замедляются.</td>
+             <td><input type="radio" name="q14" value="1" required></td>
+             <td><input type="radio" name="q14" value="2"></td>
+             <td><input type="radio" name="q14" value="3"></td>
+             <td><input type="radio" name="q14" value="4"></td>
+             <td><input type="radio" name="q14" value="5"></td>
+         </tr>
+         <tr>
+           <th>15.	Из-за эпизодов усталости, меня сейчас менее привлекают виды деятельности, требующие концентрации внимания.</td>
+             <td><input type="radio" name="q15" value="1" required></td>
+             <td><input type="radio" name="q15" value="2"></td>
+             <td><input type="radio" name="q15" value="3"></td>
+             <td><input type="radio" name="q15" value="4"></td>
+             <td><input type="radio" name="q15" value="5"></td>
+         </tr>
+         <tr>
+          <th></th>
+          <th>Никогда</th>
+          <th>Иногда</th>
+          <th>Редко</th>
+          <th>Часто</th>
+          <th>Всегда</th>
+        </tr>
+         <th>16.	Если эпизод усталости продолжается, я больше не в состоянии быстро реагировать.</td>
+           <td><input type="radio" name="q16" value="1" required></td>
+           <td><input type="radio" name="q16" value="2"></td>
+           <td><input type="radio" name="q16" value="3"></td>
+           <td><input type="radio" name="q16" value="4"></td>
+           <td><input type="radio" name="q16" value="5"></td>
+       </tr>
+         <tr>
+           <th>17.	Когда я испытываю эпизод усталости, некоторые слова просто «вылетают из головы».</td>
+             <td><input type="radio" name="q17" value="1" required></td>
+             <td><input type="radio" name="q17" value="2"></td>
+             <td><input type="radio" name="q17" value="3"></td>
+             <td><input type="radio" name="q17" value="4"></td>
+             <td><input type="radio" name="q17" value="5"></td>
+         </tr>
+         <tr>
+           <th>18.	Когда я испытываю эпизоды усталости, я теряю способность к концентрации значительно быстрее, чем раньше.</td>
+             <td><input type="radio" name="q18" value="1" required></td>
+             <td><input type="radio" name="q18" value="2"></td>
+             <td><input type="radio" name="q18" value="3"></td>
+             <td><input type="radio" name="q18" value="4"></td>
+             <td><input type="radio" name="q18" value="5"></td>
+         </tr>
+         <tr>
+           <th>19.	Когда мне жарко, я испытываю крайнюю физическую слабость и нехватку энергии.</td>
+             <td><input type="radio" name="q19" value="1" required></td>
+             <td><input type="radio" name="q19" value="2"></td>
+             <td><input type="radio" name="q19" value="3"></td>
+             <td><input type="radio" name="q19" value="4"></td>
+             <td><input type="radio" name="q19" value="5"></td>
+         </tr>
+         <tr>
+           <th>20.	Во время приступов усталости я становлюсь значительно более забывчивым.</td>
+             <td><input type="radio" name="q20" value="1" required></td>
+             <td><input type="radio" name="q20" value="2"></td>
+             <td><input type="radio" name="q20" value="3"></td>
+             <td><input type="radio" name="q20" value="4"></td>
+             <td><input type="radio" name="q20" value="5"></td>
+         </tr>
+
+        </table>
+
+         <h4>Результаты:</h4>
+
+         <div class="results">
+           <label for="fsmc_kog">FSMC-ког =</label>
+           <input id="fsmc_kog" type="text" name="kog">
+
+           <label for="fsmc_mot">FSMC-мот =</label>
+           <input id="fsmc_mot" type="text" name="mot">
+
+           <label for="fsmc_total">FSMC-общий =</label>
+           <input id="fsmc_total" type="text" name="total">
+         </div>
+
+         <div>
+           <button type="submit" id="excel_btn">Сохранить</button>
+         </div>
+         </form>
+
+    </div>
+{% endblock %}
+
+{% block script %}
+
+  <script src="{{ url_for('static', filename='js/fsmc.js') }}"></script>
+
+{% endblock %}

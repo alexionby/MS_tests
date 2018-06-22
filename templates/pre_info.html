@@ -1,0 +1,95 @@
+<fieldset class="patient">
+  <legend>Персональная информация пациента</legend>
+    <div class="formLine">
+      <label for="fname">Фамилия:</label>
+      {% if fname %}
+      <input id="fname" type="text" name="fname" value="{{ fname }}"/>
+      {% else %}
+      <input id="fname" type="text" name="fname"/>
+      {% endif %}
+    </div>
+
+    <div class="formLine">
+      <label for="sname">Имя:</label>
+      {% if fname %}
+      <input id="sname" type="text" name="sname" value="{{ sname }}"/>
+      {% else %}
+      <input id="sname" type="text" name="sname"/>
+      {% endif %}
+    </div>
+
+    <div class="formLine">
+      <label for="lname">Отчество:</label>
+      {% if fname %}
+      <input id="lname" type="text" name="lname" value="{{ lname }}"/>
+      {% else %}
+      <input id="lname" type="text" name="lname"/>
+      {% endif %}
+    </div>
+
+    <div class="formLine">
+      <label for="birth_date">Дата рождения:</label>
+      {% if birth_date %}
+      <input id="birth_date" type="date" name="birth_date" value="{{ birth_date }}">
+      {% else %}
+      <input id="birth_date" type="date" name="birth_date">
+      {% endif %}
+    </div>
+
+    <div class="formLine">
+    <label for="gender">Пол:</label>
+        {% if gender=='male' %}
+        <input type="radio" id="male" name="gender" value="male" {{ 'checked="checked"' }}>
+        {% else %}
+        <input type="radio" id="male" name="gender" value="male">
+        {% endif %}
+        <label for="male">Мужской</label>
+
+        {% if gender=='female' %}
+        <input type="radio" id="female" name="gender" value="female" {{ 'checked="checked"' }}>
+        {% else %}
+        <input type="radio" id="female" name="gender" value="female">
+        {% endif %}
+        <label for="female">Женский</label>
+      </div>
+</fieldset>
+<fieldset class="specialist">
+  <legend>Данные специалиста:</legend>
+
+  <div class="formLine">
+    <label for="fname">Фамилия:</label>
+    {% if spec_fname %}
+    <input id="fname" type="text" name="spec_fname" value="{{ spec_fname }}"/>
+    {% else %}
+    <input id="fname" type="text" name="spec_fname"/>
+    {% endif %}
+  </div>
+
+  <div class="formLine">
+    <label for="sname">Имя:</label>
+    {% if spec_sname %}
+    <input id="sname" type="text" name="spec_sname" value="{{ spec_sname }}"/>
+    {% else %}
+    <input id="sname" type="text" name="spec_sname"/>
+    {% endif %}
+  </div>
+
+  <div class="formLine">
+    <label for="lname">Отчество:</label>
+    {% if spec_lname %}
+    <input id="lname" type="text" name="spec_lname" value="{{ spec_lname }}"/>
+    {% else %}
+    <input id="lname" type="text" name="spec_lname"/>
+    {% endif %}
+  </div>
+
+  <div class="formLine">
+    <label for="visit_date">Дата визита:</label>
+    {% if visit_date %}
+    <input id="visit_date" type="date" name="visit_date" value="{{ visit_date }}">
+    {% else %}
+    <input id="visit_date" type="date" name="visit_date">
+    {% endif%}
+  </div>
+
+</fieldset>

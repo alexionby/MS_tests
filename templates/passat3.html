@@ -1,0 +1,66 @@
+{% extends "basic.html" %}
+
+{% block title %}
+
+<title>PASAT 3</title>
+
+<style>
+  div {
+    width: 480px;
+    margin: auto;
+    padding-top: 10px;
+  }
+
+  p {
+    margin: 5px 0;
+  }
+
+</style>
+
+{% endblock%}
+
+{% block body %}
+
+  <div class="center">
+
+    <h2>PASAT 3</h2>
+
+    <form name="mainForm" onsubmit="save_screen(this); return false" action="{{ url_for('index') }}" method="post">
+
+      <div class="patient_form">
+        {% include 'pre_info.html' %}
+      </div>
+
+      <fieldset>
+        <legend>Результаты тестирования</legend>
+        <div>
+          <input type="radio" name="pasat_form_type" value="A" required>
+          <label for="pasat_formType">Форма А</label>
+          <input type="radio" name="pasat_form_type" value="B" required>
+          <label for="pasat_form_type">Форма Б</label>
+        </div>
+        <div>
+          <label for="pasat_correct">Всего правильных ответов:</label>
+          <input name="pasat_correct" type="text" size="5" required/>
+        </div>
+        <div>
+          <label for="pasat_procent">Процент правильных ответов:</label>
+          <input name="pasat_procent" type="text" size="5" required/>
+        </div>
+      </fieldset>
+
+
+
+      <div>
+        <button type="submit" id="excel_btn">Сохранить</button>
+      </div>
+    </form>
+
+  </div>
+{% endblock %}
+
+{% block script %}
+
+<script src="{{ url_for('static', filename='js/pasat3.js') }}"></script>
+
+{% endblock %}
