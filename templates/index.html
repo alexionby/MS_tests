@@ -112,24 +112,24 @@
               <div class="row botm-0 topp-10 botp-10">
                 <span class="col s2">Пол:</span>
                 <label class="col s5">
-                    {% if gender=='male' %}
-                    <input id="male" type="radio" id="male" name="gender" value="male" {{ 'checked="checked"' }}>
+                    {% if sex=='male' %}
+                    <input id="male" type="radio" id="male" name="sex" value="male" {{ 'checked="checked"' }}>
                     {% else %}
-                    <input id="male" type="radio" id="male" name="gender" value="male">
+                    <input id="male" type="radio" id="male" name="sex" value="male">
                     {% endif %}
                     <span>Мужской</span>
                   </label>
     
                   <label class="col s5">
-                    {% if gender=='female' %}
-                    <input id="female" type="radio" id="female" name="gender" value="female" {{ 'checked="checked"' }}>
+                    {% if sex=='female' %}
+                    <input id="female" type="radio" id="female" name="sex" value="female" {{ 'checked="checked"' }}>
                     {% else %}
-                    <input id="female" type="radio" id="female" name="gender" value="female">
+                    <input id="female" type="radio" id="female" name="sex" value="female">
                     {% endif %}
                     <span>Женский</span>
                   </label>
               </div>
-
+              <!--
               <div class="input-field">
                 <label for="addr">Адрес:</label>
                 {% if fname %}
@@ -138,7 +138,7 @@
                 <input id="addr" type="text" name="addr"/>
                 {% endif %}
               </div>
-
+              -->
             </div>
           </div>
         <div class="col s6">
@@ -173,11 +173,11 @@
             </div>
 
             <div class="input-field">
-              <label for="spec_clinic">Номер поликлиники:</label>
+              <label for="clinic">Номер поликлиники:</label>
               {% if spec_lname %}
-              <input id="spec_clinic" type="text" name="spec_clinic" value="{{ spec_clinic }}"/>
+              <input id="clinic" type="text" name="clinic" value="{{ clinic }}"/>
               {% else %}
-              <input id="spec_clinic" type="text" name="spec_clinic"/>
+              <input id="clinic" type="text" name="clinic"/>
               {% endif %}
             </div>
           </div>

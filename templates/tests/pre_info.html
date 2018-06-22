@@ -37,18 +37,18 @@
     </div>
 
     <div class="formLine">
-    <label for="gender">Пол:</label>
-        {% if gender=='male' %}
-        <input type="radio" id="male" name="gender" value="male" {{ 'checked="checked"' }}>
+    <label for="sex">Пол:</label>
+        {% if sex=='male' %}
+        <input type="radio" id="male" name="sex" value="male" {{ 'checked="checked"' }}>
         {% else %}
-        <input type="radio" id="male" name="gender" value="male">
+        <input type="radio" id="male" name="sex" value="male">
         {% endif %}
         <label for="male">Мужской</label>
 
-        {% if gender=='female' %}
-        <input type="radio" id="female" name="gender" value="female" {{ 'checked="checked"' }}>
+        {% if sex=='female' %}
+        <input type="radio" id="female" name="sex" value="female" {{ 'checked="checked"' }}>
         {% else %}
-        <input type="radio" id="female" name="gender" value="female">
+        <input type="radio" id="female" name="sex" value="female">
         {% endif %}
         <label for="female">Женский</label>
       </div>
@@ -80,6 +80,15 @@
     <input id="lname" type="text" name="spec_lname" value="{{ spec_lname }}"/>
     {% else %}
     <input id="lname" type="text" name="spec_lname"/>
+    {% endif %}
+  </div>
+
+  <div class="formLine">
+    <label for="clinic">Поликлиника:</label>
+    {% if spec_lname %}
+    <input id="clinic" type="text" name="clinic" value="{{ clinic }}"/>
+    {% else %}
+    <input id="clinic" type="text" name="clinic"/>
     {% endif %}
   </div>
 

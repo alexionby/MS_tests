@@ -36,51 +36,48 @@ db = SQLAlchemy(app)
 class Person(db.Model):
 
     __tablename__ = 'person'
+    id = db.Column(db.Integer, primary_key=True)
+    fname = db.Column(db.String(30), nullable=False)
+    sname = db.Column(db.String(30), nullable=False)
+    lname = db.Column(db.String(30), nullable=False)
     type = db.Column(db.String(50))
 
     __mapper_args__ = {
-        'polymorphic_identity' : 'person',
-        'polymorphic_on' : type
+        'polymorphic_on' : type,
+        'polymorphic_identity' : 'person'
     }
-
-    id = db.Column(db.Integer, primary_key=True)
-    fname = db.Columnd(db.String(30), nullable=False)
-    sname = db.Columnd(db.String(30), nullable=False)
-    lname = db.Columnd(db.String(30), nullable=False)
 
 class Patient(Person):
 
-    birth_date = db.Column(db.DateTime, nullable=False, default=None)
-    sex = db.Column(db.Boolean, nullable=False)
+
+    birth_date = db.Column(db.DateTime,default=None)
+    sex = db.Column(db.Boolean)
 
     __mapper_args__ = {
-        'polymorphic_identity':'doctor'
+        'polymorphic_identity':'patient'
     }
+
+    def __repr__(self):
+        #return "id {}; name: {}; birth: {}".format(self.id, self.fname, self.birth_date)
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}        
 
 class Doctor(Person):
 
+    clinic = db.Column(db.Integer)
     __mapper_args__ = {
         'polymorphic_identity':'doctor'
     }
 
+    def __repr__(self):
+        #return "id {}; name: {}; birth: {}".format(self.id, self.fname, self.clinic)
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
 class Visit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
-    doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.id'),
-    #patient_fname = db.Column(db.String(80), unique=False, nullable=False)
-    #patient_sname = db.Column(db.String(80), unique=False, nullable=False)
-    #patient_lname = db.Column(db.String(80), unique=False, nullable=False)
-    #patient_birth_date = db.Column(db.DateTime, nullable=False, default=None)
-    #patient_sex = db.Column(db.Boolean, nullable=False)
-
-    #doctor_fname = db.Column(db.String(80), unique=False, nullable=False)
-    #doctor_sname = db.Column(db.String(80), unique=False, nullable=False)
-    #doctor_lname = db.Column(db.String(80), unique=False, nullable=False)
-
+    patient_id = db.Column(db.Integer, db.ForeignKey('person.id'))
+    doctor_id = db.Column(db.Integer, db.ForeignKey('person.id'))
     visit_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
-    def __repr__(self):
-        return 'Patient: Id: {2}, Name: {0}, Second name: {1}'.format(self.patient_fname, self.patient_sname, self.id)
 
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -263,20 +260,20 @@ def search_visit():
 
 @app.route('/visit/<visit_id>', methods=['GET','POST'])
 def view_tests(visit_id):
-
     tests = BasicTest.query.filter_by(visit_id = visit_id).all()
-
     return render_template("tests_view.html", tests = tests)
+
+
 
 def check_form(request, template_path):
     if request.method == 'GET':
         OK_FLAG = True
         correct_dict = {}
-        if 'gender' not in request.args:
+        if 'sex' not in request.args:
             OK_FLAG = False
             flash('Укажите пол!')
         else:
-            correct_dict['gender'] = request.args['gender']
+            correct_dict['sex'] = request.args['sex']
         for key in request.args:
             if request.args[key] == '':
                 OK_FLAG = False
@@ -298,36 +295,36 @@ def index():
 
 @app.route('/memory_test', methods=['GET'])
 def memory_test():
-    return check_form(request, 'MemoryTest.html')
+    return check_form(request, 'tests/MemoryTest.html')
 
 @app.route('/hads', methods=['GET'])
 def hads():
-    return check_form(request, 'HADS.html')
+    return check_form(request, 'tests/HADS.html')
 
 @app.route('/sf36', methods=['GET'])
 def sf36():
-    return check_form(request, 'sf36.html')
+    return check_form(request, 'tests/sf36.html')
 
 @app.route('/foot25', methods=['GET'])
 def foot_25():
-    return check_form(request, 'foot25.html')
+    return check_form(request, 'tests/foot25.html')
 
 @app.route('/hpt9', methods=['GET'])
 def hpt_9():
-    return check_form(request, 'hpt9.html')
+    return check_form(request, 'tests/hpt9.html')
 
 @app.route('/passat3', methods=['GET'])
 def passat_3():
-    return check_form(request, 'passat3.html')
+    return check_form(request, 'tests/passat3.html')
 
 @app.route('/neurostatus', methods=['GET','POST'])
 def neurostatus():
     if request.method == 'GET':
-        return check_form(request, 'neurostatus.html')
+        return check_form(request, 'tests/neurostatus.html')
 
 @app.route('/fsmc', methods=['GET'])
 def fsmc():
-    return check_form(request, 'FSMC.html')
+    return check_form(request, 'tests/FSMC.html')
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
@@ -336,7 +333,8 @@ def allowed_file(filename):
 @app.route('/screen', methods=['POST'])
 def screen():
     if request.method == 'POST':
-        print(request.form.keys())
+        
+        #[print(key) for key in request.form.keys()]
 
         name_of_test = request.form['name_of_test']
         if name_of_test not in ['fsmc', 'hads', 'memory_test', 'sf-36', '25_foot', '9_hpt', 'pasat_3', 'neurostatus_scoring']:
@@ -344,6 +342,50 @@ def screen():
 
         print(request.form['birth_date'])
         print(request.form['visit_date'])
+
+        patient = Patient.query.filter_by(fname=request.form['fname'],
+                                          sname = request.form['sname'],
+                                          lname = request.form['lname'],
+                                          birth_date = datetime.strptime(request.form['birth_date'], '%Y-%m-%d')).first()
+
+        if not patient:
+
+            patient = Patient(
+                fname=request.form['fname'],
+                sname = request.form['sname'],
+                lname = request.form['lname'],
+                birth_date = datetime.strptime(request.form['birth_date'], '%Y-%m-%d'),
+                sex = True if request.form['sex'] == "male" else False,
+            )
+
+            db.session.add(patient)
+            db.session.commit()
+
+        print("Patient OK", patient)
+        print(request.form['clinic'])
+        
+        doctor = Doctor.query.filter_by(fname=request.form['spec_fname'],
+                                        sname = request.form['spec_sname'],
+                                        lname = request.form['spec_lname'],
+                                        clinic = int(request.form['clinic'])).first()
+        
+        if not doctor:
+
+            doctor = Doctor(fname=request.form['spec_fname'],
+                            sname = request.form['spec_sname'],
+                            lname = request.form['spec_lname'],
+                            clinic = int(request.form['clinic']))
+            
+            db.session.add(doctor)
+            db.session.commit()
+        
+        print("Doctor OK", doctor)
+
+        visit = Visit(patient_id = patient.id,
+                      doctor_id = doctor.id,
+                      visit_date = datetime.strptime(request.form['visit_date'], '%Y-%m-%d'))
+
+        print("Visit OK", visit)
 
         visit = Visit.query.filter_by(patient_fname = request.form['fname'],
                                  patient_sname = request.form['sname'],
