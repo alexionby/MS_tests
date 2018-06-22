@@ -50,8 +50,8 @@ class Person(db.Model):
 class Patient(Person):
 
     id = db.Column(db.Integer, db.ForeignKey('person.id'), primary_key=True)
-    birth_date = db.Column(db.DateTime,default=None)
-    sex = db.Column(db.Boolean)
+    birth_date = db.Column(db.DateTime,default=None, nullable=False)
+    sex = db.Column(db.Boolean, nullable=False)
 
     __mapper_args__ = {
         'polymorphic_identity':'patient'
@@ -76,8 +76,8 @@ class Doctor(Person):
 
 class Visit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    patient_id = db.Column(db.Integer, db.ForeignKey('person.id'))
-    doctor_id = db.Column(db.Integer, db.ForeignKey('person.id'))
+    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
+    doctor_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
     visit_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def as_dict(self):
