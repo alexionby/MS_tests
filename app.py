@@ -12,8 +12,8 @@ from sqlalchemy.sql import default_comparator
 from werkzeug.utils import secure_filename
 
 import os
-import pandas as pd
-import numpy as np
+#import pandas as pd
+#import numpy as np
 #from PIL import Image
 #import re
 import base64
@@ -59,7 +59,18 @@ class Patient(Person):
 
     def __repr__(self):
         #return "id {}; name: {}; birth: {}".format(self.id, self.fname, self.birth_date)
-        return str({c.name: getattr(self, c.name) for c in self.__table__.columns})        
+        #return str({c.name: getattr(self, c.name) for c in self.__table__.columns})        
+        print(dir(self))
+        print("-" * 50)
+        print(dir(self.__dict__))
+        print(self.__dict__.keys()) #important
+        print(self.__dict__.values()) #important
+        print(self.__dict__.items()) #important
+        print("-" * 50)
+        print(dir(self.__subclasshook__))
+        print("-" * 50)
+        print(dir(self.__table__))
+        return "{}, {}".format(self.fname, self.sname) + str({c.name: getattr(self, c.name) for c in self.__table__.columns})
 
 class Doctor(Person):
 
