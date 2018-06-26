@@ -110,7 +110,7 @@ def search_visit():
 @app.route('/visit/<visit_id>', methods=['GET','POST'])
 def test_view(visit_id):
     tests = BasicTest.query.filter_by(visit_id = visit_id).all()
-    return render_template("tests_view.html", tests = tests)
+    return render_template("visit_view.html", tests = tests)
 
 @app.route('/patient/<patient_id>', methods=['GET','POST'])
 def patient_view(patient_id):

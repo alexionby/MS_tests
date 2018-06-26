@@ -82,8 +82,9 @@ if (search !== undefined & search !== null) {
   
       for (visit of visits) {
   
-        link = '/visit/' + visit.id; // document.URL
-  
+        visit_link = '/visit/' + visit.id; // document.URL
+        patient_link = '/patient/' + visit.patient_id
+
         console.log(typeof(visit.visit_date), visit.visit_date, Date(visit.visit_date))
   
         let visit_date = new Date(visit.visit_date);
@@ -93,16 +94,16 @@ if (search !== undefined & search !== null) {
   
         let test_card = document.createElement('li');
         test_card.classList.add('collection-item', 'row');
-        test_card.innerHTML = (`<a href="${link}" class='col s4'>${ visit.sname + ' ' + visit.fname + ' ' + visit.lname }</a>
+        test_card.innerHTML = (`<a href="${ patient_link }" class='col s4'>${ visit.sname + ' ' + visit.fname + ' ' + visit.lname }</a>
                                 <span class='col s2'>${ birth_date.toLocaleDateString('ru-RU') }</span>
-                                <!--<a href="${link}" class='col s3'>${ visit.doctor_sname + ' ' + visit.doctor_fname + ' ' + visit.doctor_lname }</a>-->
+                                <!--<a href="${patient_link}" class='col s3'>${ visit.doctor_sname + ' ' + visit.doctor_fname + ' ' + visit.doctor_lname }</a>-->
                                 <span class='col s2'>${ visit_date.toLocaleDateString('ru-RU') }</span>
                                   <!--<ul>
                                     <li>Дата рождения: ${ birth_date.toLocaleDateString('ru-RU') }</li>
                                     <li>Пол: ${ visit.patient_sex ? "Мужской" : "Женский" }</li>
                                     <li>ФИО врача: ${ visit.doctor_sname + ' ' + visit.doctor_fname + ' ' + visit.doctor_lname }</li>
                                   </ul>-->
-                                <a href="${link}" class="secondary-content col s4 right-align">Просмотр визита</a>`);
+                                <a href="${ visit_link}" class="secondary-content col s4 right-align">Просмотр визита</a>`);
         list.appendChild(test_card);
       }
   
