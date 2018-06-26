@@ -87,13 +87,13 @@ if (search !== undefined & search !== null) {
         console.log(typeof(visit.visit_date), visit.visit_date, Date(visit.visit_date))
   
         let visit_date = new Date(visit.visit_date);
-        let birth_date = new Date(visit.patient_birth_date);
+        let birth_date = new Date(visit.birth_date);
   
         console.log(visit_date)
   
         let test_card = document.createElement('li');
         test_card.classList.add('collection-item', 'row');
-        test_card.innerHTML = (`<a href="${link}" class='col s4'>${ visit.patient_sname + ' ' + visit.patient_fname + ' ' + visit.patient_lname }</a>
+        test_card.innerHTML = (`<a href="${link}" class='col s4'>${ visit.sname + ' ' + visit.fname + ' ' + visit.lname }</a>
                                 <span class='col s2'>${ birth_date.toLocaleDateString('ru-RU') }</span>
                                 <!--<a href="${link}" class='col s3'>${ visit.doctor_sname + ' ' + visit.doctor_fname + ' ' + visit.doctor_lname }</a>-->
                                 <span class='col s2'>${ visit_date.toLocaleDateString('ru-RU') }</span>

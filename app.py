@@ -29,13 +29,31 @@ from models import BasicTest, EDSS, FSMC, Foot25, HADS, MemoryTest, SF36, PASAT3
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'test_key'
 
-def to_json(objects):
+def visit_to_json(objects):
 
     result = []
     for obj in objects:
-        prop_dict = obj.__dict__.copy()
-        prop_dict.pop('_sa_instance_state', None)
-        result.append(prop_dict)
+        visit_dict = obj.__dict__.copy()
+        #visit_dict.pop('_sa_instance_state', None)
+        #print(visit_dict)
+        
+        patient_dict = Patient.query.get(visit_dict['patient_id']).__dict__
+        #print(patient_dict)
+        visit_dict.update(patient_dict)
+        #visit_dict.pop('_sa_instance_state', None)
+        #visit_dict.pop('type', None)
+        #print(visit_dict)
+
+        temp_dict = dict()
+        for key in visit_dict.keys():
+
+            if key in ["type","_sa_instance_state"]:
+                continue
+
+            temp_dict.update({key: visit_dict[key]})
+
+        result.append(temp_dict)
+
     return jsonify(result)
 
 @app.template_filter('screen_path')
@@ -87,14 +105,17 @@ def search_visit():
     #print([patient.as_dict() for patient in patients])
 
     #return jsonify([patient.as_dict() for patient in patients])
-    return to_json(visits)
+    return visit_to_json(visits)
 
 @app.route('/visit/<visit_id>', methods=['GET','POST'])
-def view_tests(visit_id):
+def test_view(visit_id):
     tests = BasicTest.query.filter_by(visit_id = visit_id).all()
     return render_template("tests_view.html", tests = tests)
 
-
+@app.route('/patient/<patient_id>', methods=['GET','POST'])
+def patient_view(patient_id):
+    visits = Visit.query.filter_by(patient_id = patient_id).all()
+    return render_template("patient_view.html", visits = visits)
 
 def check_form(request, template_path):
     if request.method == 'GET':
@@ -237,7 +258,7 @@ def screen():
         with open(screen_name, 'wb') as file:
             file.write(screenshot)
 
-        print(request.form)
+        print(name_of_test)
 
         test_summary = None
         if name_of_test == 'neurostatus_scoring':
@@ -316,6 +337,8 @@ def screen():
 
         try:
             assert test_summary
+            db.session.add(test_summary)
+            db.session.commit()
         except AssertionError:
             print('No information about test results')
 
