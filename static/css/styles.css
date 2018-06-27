@@ -50,4 +50,21 @@ select {
 input:disabled {
   background: white;
 }
+
+.export-btn {
+  margin-top: -5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  line-height: 48px;
+  height: 48px;
+  font-size: 24px;
+}
+
+.excel-logo {
+  margin-left: 10px;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
 /*# sourceMappingURL=styles.css.map */

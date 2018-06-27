@@ -2,15 +2,17 @@
 import webbrowser
 import re
 
-from flask import Flask
+from flask import Flask, send_file
 from flask import render_template, request, redirect, url_for, flash
 from flask import jsonify, json
 
 from werkzeug.utils import secure_filename
 
 import os
-#import pandas as pd
-#import numpy as np
+import pandas as pd
+import numpy as np
+from io import BytesIO
+
 #from PIL import Image
 #import re
 import base64
@@ -34,26 +36,14 @@ def visit_to_json(objects):
     result = []
     for obj in objects:
         visit_dict = obj.__dict__.copy()
-        #visit_dict.pop('_sa_instance_state', None)
-        #print(visit_dict)
-        
         patient_dict = Patient.query.get(visit_dict['patient_id']).__dict__
-        #print(patient_dict)
         visit_dict.update(patient_dict)
-        #visit_dict.pop('_sa_instance_state', None)
-        #visit_dict.pop('type', None)
-        #print(visit_dict)
-
         temp_dict = dict()
         for key in visit_dict.keys():
-
             if key in ["type","_sa_instance_state"]:
                 continue
-
             temp_dict.update({key: visit_dict[key]})
-
         result.append(temp_dict)
-
     return jsonify(result)
 
 @app.template_filter('screen_path')
@@ -114,8 +104,39 @@ def test_view(visit_id):
 
 @app.route('/patient/<patient_id>', methods=['GET','POST'])
 def patient_view(patient_id):
+    patient = Patient.query.get(patient_id)
     visits = Visit.query.filter_by(patient_id = patient_id).all()
-    return render_template("patient_view.html", visits = visits)
+    tests = []
+    for visit in visits:
+        tests.append(BasicTest.query.filter_by(visit_id = visit.id).all())
+    print(tests)
+    return render_template("patient_view.html", visits = visits, tests = tests, patient = patient)
+
+@app.route('/to_excel', methods=['GET','POST'])
+def to_excel():
+    if request.method == 'POST':
+        content = request.get_json()
+        print(content)
+
+        tests = BasicTest.query.filter_by( type = content["type"]).filter(BasicTest.visit_id.in_(content["visits"])).all()
+        results = []
+
+        for test in tests:
+            print(test)
+            results.append(test.as_dict())
+
+        df = pd.DataFrame.from_dict(results)
+        df = df.set_index("id")
+        print(df)
+        writer = pd.ExcelWriter('static/export/pandas_simple.xlsx', engine='xlsxwriter')
+        df.to_excel(writer, sheet_name='Sheet1')
+        writer.save()
+
+        return jsonify({'path': 'static/export/pandas_simple.xlsx', 'type': content['type']})
+    
+    if request.method == 'GET':
+        print(request)
+        return send_file('static/export/pandas_simple.xlsx', as_attachment=True)
 
 def check_form(request, template_path):
     if request.method == 'GET':
