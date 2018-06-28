@@ -24,18 +24,16 @@
       <p class="flow-text">{{ patient.sname }} {{ patient.fname }} {{ patient.lname }}</p>
           
       <ul class="collection">
-        {% for visit in visits %}
+        {% for visit,tests in visit_tests %}
         <li class="collection-item" data-visit="{{ visit.id }}">
           <div class="row mb-0">
             <p class="col s3 left-align">
               Дата визита: {{ visit.visit_date.strftime('%d.%m.%Y') }}
             </p>
             <p class="col s9 left-align">
-              Пройденные тесты: 
+              Проведенные тесты:
               {% for test in tests %}
-                {% for type in test %}
-                  {{ type.type }}&nbsp;
-                {% endfor %}
+                <span class="flow-text">{{test.type}}&nbsp;<span>
               {% endfor %}
             </p>
           </div>
@@ -43,7 +41,6 @@
         </li>
       </ul>
     </div>
-
 {% endblock %}
 
 {% block script %}

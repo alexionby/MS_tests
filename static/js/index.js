@@ -9,7 +9,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
   console.log(year + '-' + month + '-' + day);
   document.getElementById('visit_date').value = year + '-' + month + '-' + day;
 
-  //M.AutoInit();
+  
+  const spec_input = document.querySelectorAll("input[name^='spec_'], input[name='clinic']");
+  for (input of spec_input) {
+    console.log(input)
+    const value = localStorage.getItem(input.name);
+    if (value) {
+      input.value = value;
+      input.previousElementSibling.classList.add("active");
+    }
+
+    input.addEventListener("change", (event) => {
+      localStorage.setItem(event.target.name, event.target.value);
+    });
+  }
+
 });
 
 

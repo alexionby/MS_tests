@@ -36,14 +36,16 @@ def visit_to_json(objects):
     result = []
     for obj in objects:
         visit_dict = obj.__dict__.copy()
-        patient_dict = Patient.query.get(visit_dict['patient_id']).__dict__
-        visit_dict.update(patient_dict)
-        temp_dict = dict()
-        for key in visit_dict.keys():
-            if key in ["type","_sa_instance_state"]:
-                continue
-            temp_dict.update({key: visit_dict[key]})
-        result.append(temp_dict)
+        patient_dict = Patient.query.get(visit_dict['patient_id']).__dict__.copy()
+        doctor_dict = Doctor.query.get(visit_dict['doctor_id']).__dict__.copy()
+
+        for key in set([*visit_dict.keys(), *patient_dict.keys(), *doctor_dict.keys()]):
+            if key in ["_sa_instance_state"]:
+                for _dict in [visit_dict, patient_dict, doctor_dict]:
+                    _dict.pop(key, None)
+        result.append((visit_dict, patient_dict, doctor_dict))
+    
+    print(result)
     return jsonify(result)
 
 @app.template_filter('screen_path')
@@ -54,11 +56,11 @@ def reverse_filter(s):
 @app.route('/search_visit', methods=['POST'])
 def search_visit():
     if request.method == 'POST':
-        print(request.form)
-        print(request)
-        print (request.is_json)
+        #print(request.form)
+        #print(request)
+        #print (request.is_json)
         content = request.get_json()
-        print (content)
+        #print (content)
 
         filters = {}
 
@@ -70,69 +72,80 @@ def search_visit():
             filters['lname'] = content['lname']
 
         #patients_id = Patient.query.filter_by(**filters).with_entities(Patient.id).all()
-        patients_id = db.session.query(Patient.id).all()
-        print(patients_id)
+        patients = Patient.query.filter_by(**filters).all() #db.session.query(Patient.id).all()
+        #print(patients)
 
-        patients_id = list(map(lambda x: x[0], patients_id))
-        print(patients_id)
+        patients_id = list(map(lambda patient: patient.id, patients))
+        #print(patients_id)
 
         #visits = Visit.query.filter(Visit.patient_id in patients_id).all()
-        visits = db.session.query(Visit).filter(Visit.patient_id.in_(patients_id)).all()
-        print(visits)
-        """
+        visits = db.session.query(Visit).filter(Visit.patient_id.in_(patients_id)) #.all()
+        #print(visits)
+        
         if content['from_date']:
-            print(content['from_date'])
-            patients = patients.filter(Visit.visit_date >= datetime.strptime(content['from_date'], '%Y-%m-%d'))
+            #print(content['from_date'])
+            visits = visits.filter(Visit.visit_date >= datetime.strptime(content['from_date'], '%Y-%m-%d'))
+        #print(visits.all())
         if content['to_date']:
-            print(content['to_date'])
-            patients = patients.filter(Visit.visit_date <= datetime.strptime(content['to_date'], '%Y-%m-%d'))
-        """
+            #print(content['to_date'])
+            visits = visits.filter(Visit.visit_date <= datetime.strptime(content['to_date'], '%Y-%m-%d'))
 
-        #patients = patients.all()
-
-    #print(patients)
-
-    #print([patient.as_dict() for patient in patients])
-
-    #return jsonify([patient.as_dict() for patient in patients])
+    visits = visits.all()
     return visit_to_json(visits)
 
 @app.route('/visit/<visit_id>', methods=['GET','POST'])
-def test_view(visit_id):
+def visit_view(visit_id):
     tests = BasicTest.query.filter_by(visit_id = visit_id).all()
+    print(tests)
     return render_template("visit_view.html", tests = tests)
 
 @app.route('/patient/<patient_id>', methods=['GET','POST'])
 def patient_view(patient_id):
     patient = Patient.query.get(patient_id)
     visits = Visit.query.filter_by(patient_id = patient_id).all()
-    tests = []
+    visit_tests = []
     for visit in visits:
+        tests = []
+        tests.append(visit)
         tests.append(BasicTest.query.filter_by(visit_id = visit.id).all())
-    print(tests)
-    return render_template("patient_view.html", visits = visits, tests = tests, patient = patient)
+        visit_tests.append(tests)
+    print(visit_tests)
+    return render_template("patient_view.html", visit_tests = visit_tests, patient = patient)
 
 @app.route('/to_excel', methods=['GET','POST'])
 def to_excel():
     if request.method == 'POST':
-        content = request.get_json()
-        print(content)
+        #content = request.get_json()
+        #print(content)
 
-        tests = BasicTest.query.filter_by( type = content["type"]).filter(BasicTest.visit_id.in_(content["visits"])).all()
+        #tests = BasicTest.query.filter_by( type = content["type"]).filter(BasicTest.visit_id.in_(content["visits"])).all()
+        tests = BasicTest.query.filter_by( type = request.form["type"]).filter(BasicTest.visit_id.in_(request.form["visits"])).all()
+        print(request.form)
+
         results = []
 
         for test in tests:
             print(test)
-            results.append(test.as_dict())
+            print(Visit.query.get(test.visit_id).visit_date)
+            date = {"visit_date" : Visit.query.get(test.visit_id).visit_date.strftime('%d.%m.%Y')}
+            test = test.as_dict()
+            test.update(date)
+            results.append(test)
 
         df = pd.DataFrame.from_dict(results)
         df = df.set_index("id")
         print(df)
-        writer = pd.ExcelWriter('static/export/pandas_simple.xlsx', engine='xlsxwriter')
-        df.to_excel(writer, sheet_name='Sheet1')
-        writer.save()
 
-        return jsonify({'path': 'static/export/pandas_simple.xlsx', 'type': content['type']})
+        output = BytesIO()
+        #writer = pd.ExcelWriter('static/export/pandas_simple.xlsx', engine='xlsxwriter')
+        writer = pd.ExcelWriter(output, engine='xlsxwriter')
+        df.to_excel(writer, sheet_name='Sheet1')
+        #writer.save()
+        writer.close()
+        output.seek(0)
+
+        #return jsonify({'path': 'static/export/pandas_simple.xlsx', 'type': content['type']})
+        return send_file(output, attachment_filename="export.xlsx", as_attachment=True)
     
     if request.method == 'GET':
         print(request)
@@ -213,9 +226,6 @@ def screen():
         if name_of_test not in ['fsmc', 'hads', 'memory_test', 'sf-36', '25_foot', '9_hpt', 'pasat_3', 'neurostatus_scoring']:
             print('error')
 
-        print(request.form['birth_date'])
-        print(request.form['visit_date'])
-
         patient = Patient.query.filter_by(fname=request.form['fname'],
                                           sname = request.form['sname'],
                                           lname = request.form['lname'],
@@ -233,8 +243,9 @@ def screen():
 
             db.session.add(patient)
             db.session.commit()
-
-        print("Patient OK", patient)
+            print("Patient Created")
+        else:
+            print("Patient Existed")
         
         doctor = Doctor.query.filter_by(fname=request.form['spec_fname'],
                                         sname = request.form['spec_sname'],
@@ -250,14 +261,13 @@ def screen():
             
             db.session.add(doctor)
             db.session.commit()
-        
-        print("Doctor OK", doctor)
+            print("Doctor Created")
+        else:
+            print("Doctor Existed")
 
         visit = Visit.query.filter_by(patient_id = patient.id,
                                        doctor_id = doctor.id,
                                        visit_date = datetime.strptime(request.form['visit_date'], '%Y-%m-%d')).first()
-
-        print(visit)
 
         if not visit:
 
@@ -267,10 +277,11 @@ def screen():
 
             db.session.add(visit)
             db.session.commit()
+            print("Visit Created")
+        else:
+            print("Visit Existed")
 
-        print("Visit OK", visit)
-
-        screen_name = '_'.join([str(visit.id), name_of_test, '.png'])
+        screen_name = '_'.join([str(visit.id), name_of_test]) + '.png'
         screen_name = os.path.join(UPLOAD_FOLDER, screen_name)
 
         screenshot = request.form['screen'].split(',')[1]

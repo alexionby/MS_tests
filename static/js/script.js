@@ -80,30 +80,32 @@ if (search !== undefined & search !== null) {
       list = document.getElementById('search_results');
       list.innerHTML = '';
   
-      for (visit of visits) {
-  
-        visit_link = '/visit/' + visit.id; // document.URL
-        patient_link = '/patient/' + visit.patient_id
+      for (let [visit,patient,doctor] of visits) {
+        
+        console.log(visit, patient);
 
-        console.log(typeof(visit.visit_date), visit.visit_date, Date(visit.visit_date))
+        visit_link = '/visit/' + visit.id; // document.URL
+        patient_link = '/patient/' + patient.id
+
+        //console.log(typeof(visit.visit_date), visit.visit_date, Date(visit.visit_date))
   
         let visit_date = new Date(visit.visit_date);
-        let birth_date = new Date(visit.birth_date);
+        let birth_date = new Date(patient.birth_date);
   
-        console.log(visit_date)
+        //console.log(visit_date)
   
         let test_card = document.createElement('li');
         test_card.classList.add('collection-item', 'row');
-        test_card.innerHTML = (`<a href="${ patient_link }" class='col s4'>${ visit.sname + ' ' + visit.fname + ' ' + visit.lname }</a>
+        test_card.innerHTML = (`<a href="${ patient_link }" class='col s4'>${ visit.id + '. ' + patient.sname + ' ' + patient.fname + ' ' + patient.lname }</a>
                                 <span class='col s2'>${ birth_date.toLocaleDateString('ru-RU') }</span>
                                 <!--<a href="${patient_link}" class='col s3'>${ visit.doctor_sname + ' ' + visit.doctor_fname + ' ' + visit.doctor_lname }</a>-->
                                 <span class='col s2'>${ visit_date.toLocaleDateString('ru-RU') }</span>
                                   <!--<ul>
                                     <li>Дата рождения: ${ birth_date.toLocaleDateString('ru-RU') }</li>
-                                    <li>Пол: ${ visit.patient_sex ? "Мужской" : "Женский" }</li>
+                                    <li>Пол: ${ patient.sex ? "Мужской" : "Женский" }</li>
                                     <li>ФИО врача: ${ visit.doctor_sname + ' ' + visit.doctor_fname + ' ' + visit.doctor_lname }</li>
                                   </ul>-->
-                                <a href="${ visit_link}" class="secondary-content col s4 right-align">Просмотр визита</a>`);
+                                <a href="${ visit_link }" class="secondary-content col s4 right-align">Просмотр визита</a>`);
         list.appendChild(test_card);
       }
   
