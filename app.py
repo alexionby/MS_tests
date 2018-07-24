@@ -115,10 +115,7 @@ def patient_view(patient_id):
 @app.route('/to_excel', methods=['GET','POST'])
 def to_excel():
     if request.method == 'POST':
-        #content = request.get_json()
-        #print(content)
 
-        #tests = BasicTest.query.filter_by( type = content["type"]).filter(BasicTest.visit_id.in_(content["visits"])).all()
         tests = BasicTest.query.filter_by( type = request.form["type"]).filter(BasicTest.visit_id.in_(request.form["visits"])).all()
         print(request.form)
 
@@ -137,19 +134,12 @@ def to_excel():
         print(df)
 
         output = BytesIO()
-        #writer = pd.ExcelWriter('static/export/pandas_simple.xlsx', engine='xlsxwriter')
         writer = pd.ExcelWriter(output, engine='xlsxwriter')
         df.to_excel(writer, sheet_name='Sheet1')
-        #writer.save()
         writer.close()
         output.seek(0)
 
-        #return jsonify({'path': 'static/export/pandas_simple.xlsx', 'type': content['type']})
         return send_file(output, attachment_filename="export.xlsx", as_attachment=True)
-    
-    if request.method == 'GET':
-        print(request)
-        return send_file('static/export/pandas_simple.xlsx', as_attachment=True)
 
 def check_form(request, template_path):
     if request.method == 'GET':
@@ -344,8 +334,8 @@ def screen():
 
             test_summary = SF36(visit_id = visit.id, 
                                 screenshot_path = screen_name,
-                                PHC = int(request.form['PHC']),
-                                MHC = int(request.form['MHC']))
+                                PHC = float(request.form['PHC']),
+                                MHC = float(request.form['MHC']))
 
         if name_of_test == 'pasat_3':
 
@@ -383,9 +373,9 @@ def main():
     if not 'visits.db' in os.listdir():
         db.create_all()
 
-    #url = 'http://localhost:5000/'
-    #webbrowser.open_new_tab(url)
-    app.run(debug=True)
+    url = 'http://localhost:5000/'
+    webbrowser.open_new_tab(url)
+    app.run(debug=False)
 
 if __name__ == "__main__":
     main()

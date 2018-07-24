@@ -4,7 +4,9 @@ from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import default_comparator
 
-app = Flask(__name__)
+import os
+
+app = Flask(__name__, root_path=os.getcwd())
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///visits.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -159,8 +161,8 @@ class SF36(BasicTest):
     __tablename__ = 'SF-36'
     
     id = db.Column(db.Integer, db.ForeignKey('basic_test.id'), primary_key=True)
-    PHC = db.Column(db.Integer)
-    MHC = db.Column(db.Integer)
+    PHC = db.Column(db.Float)
+    MHC = db.Column(db.Float)
 
     __mapper_args__ = {
         'polymorphic_identity':'SF-36',

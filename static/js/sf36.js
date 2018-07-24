@@ -114,6 +114,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.querySelector("input[name='PHC']").value = PHC.toFixed(3);
     document.querySelector("input[name='MHC']").value = MHC.toFixed(3);
 
+    const results = document.querySelector("div.final-results");
+    results.classList.remove("hidden");
+
+    document.querySelector("button[type='submit']").click();
   })
 
 });

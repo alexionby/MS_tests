@@ -209,18 +209,27 @@
             {% endif %}
           {% endwith %}
     
-          <h5 class="center-align red-text text-lighten-2">Выберите тест:</h5>
+          <h5 class="center-align red-text text-lighten-2">Тесты для заполнения врачом:</h5>
 
           <ol class="tests_list">
             <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('hpt_9') }}">9 HPT</button></li>
             <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('passat_3') }}">PASAT 3</button></li>
-            <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('sf36') }}">SF-36</button></li>
+            
             <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('memory_test') }}">Symbol Digit Modalities Test  (SDMT)</button></li>
-            <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('hads') }}">Hospital Anxiety and Depression Scale (HADS)</button></li>
+            
             <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('foot_25') }}">25 Foot</button></li>
-            <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('fsmc') }}">Fatigue Scale for Motor and Cognitive Functions (FSMCF)</button></li>
+            
             <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('neurostatus') }}">Expanded Disability Status Scale (EDSS)</button></li>
           </ol>
+
+          <h5 class="center-align red-text text-lighten-2">Тесты для заполнения пациентом:</h5>
+
+          <ol class="tests_list">
+            <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('sf36') }}">SF-36</button></li>
+            <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('hads') }}">Hospital Anxiety and Depression Scale (HADS)</button></li>
+            <li><button class="btn waves-effect waves-light" type="submit" formaction="{{ url_for('fsmc') }}">Fatigue Scale for Motor and Cognitive Functions (FSMCF)</button></li>
+          </ol>
+
         </form>
     
       </div>

@@ -20,7 +20,7 @@
     <form name="mainForm" onsubmit="save_screen(this); return false" action="{{ url_for('index') }}" method="post">
 
       <div class="patient_form">
-        {% include 'pre_info.html' %}
+        {% include 'tests/pre_info.html' %}
       </div>
 
       <h4>Инструкция</h4>
@@ -33,7 +33,7 @@
             <tr>
               <th>В целом вы бы оценили состояние Вашего здоровья как:</th>
               <td>
-                <select name="q1">
+                <select name="q1" required>
                   <option disabled selected value> Выберите ответ </option>
                   <option value="1">Отличное</option>
                   <option value="2">Очень хорошее</option>
@@ -50,7 +50,7 @@
             <tr>
               <th>Как бы вы оценили свое здоровье сейчас по сравнению с тем, что было год назад? (обведите одну цифру):</th>
               <td>
-                <select name="q2">
+                <select name="q2" required>
                   <option disabled selected value> Выберите ответ </option>
                   <option value="1">Значительно лучше, чем год назад</option>
                   <option value="2">Несколько лучше, чем год назад</option>
@@ -74,7 +74,7 @@
                <tr>
                  <th>Тяжелые физические нагрузки, такие как бег, поднятие тяжестей, занятие силовыми видами спорта</th>
                  <td>
-                   <select name="q3a">
+                   <select name="q3a" required>
                      <option disabled selected value> Выберите ответ </option>
                      <option value="1">Да, значительно ограничивает</option>
                      <option value="2">Да, немного ограничивает</option>
@@ -85,7 +85,7 @@
                <tr>
                  <th>Умеренные физические нагрузки, такие как передвинуть стол, поработать в пылесосом, собирать грибы и ягоды</th>
                  <td>
-                   <select name="q3b">
+                   <select name="q3b" required>
                      <option disabled selected value> Выберите ответ </option>
                      <option value="1">Да, значительно ограничивает</option>
                      <option value="2">Да, немного ограничивает</option>
@@ -96,7 +96,7 @@
                <tr>
                  <th>Поднять или нести сумку с продуктами</th>
                  <td>
-                   <select name="q3c">
+                   <select name="q3c" required>
                      <option disabled selected value> Выберите ответ </option>
                      <option value="1">Да, значительно ограничивает</option>
                      <option value="2">Да, немного ограничивает</option>
@@ -107,7 +107,7 @@
                <tr>
                  <th>Подняться пешком по лестнице на несколько пролетов</th>
                  <td>
-                   <select name="q3d">
+                   <select name="q3d" required>
                      <option disabled selected value> Выберите ответ </option>
                      <option value="1">Да, значительно ограничивает</option>
                      <option value="2">Да, немного ограничивает</option>
@@ -118,7 +118,7 @@
                <tr>
                  <th>Подняться пешком по лестнице на один пролет</th>
                  <td>
-                   <select name="q3e">
+                   <select name="q3e" required>
                      <option disabled selected value> Выберите ответ </option>
                      <option value="1">Да, значительно ограничивает</option>
                      <option value="2">Да, немного ограничивает</option>
@@ -129,7 +129,7 @@
                <tr>
                  <th>Наклониться, встать на колени, присесть на корточки</th>
                  <td>
-                   <select name="q3f">
+                   <select name="q3f" required>
                      <option disabled selected value> Выберите ответ </option>
                      <option value="1">Да, значительно ограничивает</option>
                      <option value="2">Да, немного ограничивает</option>
@@ -140,7 +140,7 @@
                <tr>
                  <th>Пройти расстояние более одного километра</th>
                  <td>
-                   <select name="q3g">
+                   <select name="q3g" required>
                      <option disabled selected value> Выберите ответ </option>
                      <option value="1">Да, значительно ограничивает</option>
                      <option value="2">Да, немного ограничивает</option>
@@ -151,7 +151,7 @@
                <tr>
                  <th>Пройти расстояние в несколько кварталов</th>
                  <td>
-                   <select name="q3h">
+                   <select name="q3h" required>
                      <option disabled selected value> Выберите ответ </option>
                      <option value="1">Да, значительно ограничивает</option>
                      <option value="2">Да, немного ограничивает</option>
@@ -162,7 +162,7 @@
                <tr>
                  <th>Пройти расстояние в один квартал</th>
                  <td>
-                   <select name="q3i">
+                   <select name="q3i" required>
                      <option disabled selected value> Выберите ответ </option>
                      <option value="1">Да, значительно ограничивает</option>
                      <option value="2">Да, немного ограничивает</option>
@@ -173,7 +173,7 @@
                <tr>
                  <th>Самостоятельно вымыться, одеться</th>
                  <td>
-                   <select name="q3j">
+                   <select name="q3j" required>
                      <option disabled selected value> Выберите ответ </option>
                      <option value="1">Да, значительно ограничивает</option>
                      <option value="2">Да, немного ограничивает</option>
@@ -194,7 +194,7 @@
                <tr>
                  <th>Пришлось сократить количество времени, затрачиваемого на работу или другие дела</th>
                  <td>
-                   <select name="q4a">
+                   <select name="q4a" required>
                      <option disabled selected value> Выберите ответ </option>
                      <option value="1">Да</option>
                      <option value="2">Нет</option>
@@ -204,7 +204,7 @@
                <tr>
                  <th>Выполнили меньше, чем хотели</th>
                  <td>
-                   <select name="q4b">
+                   <select name="q4b" required>
                     <option disabled selected value> Выберите ответ </option>
                     <option value="1">Да</option>
                     <option value="2">Нет</option>
@@ -214,7 +214,7 @@
                <tr>
                  <th>Вы были ограничены в выполнении какого-либо определенного вида работы или другой деятельности</th>
                  <td>
-                   <select name="q4c">
+                   <select name="q4c" required>
                     <option disabled selected value> Выберите ответ </option>
                     <option value="1">Да</option>
                     <option value="2">Нет</option>
@@ -223,8 +223,8 @@
                </tr>
                <tr>
                  <th>Были трудности при выполнении своей работы или других дел (например, они потребовали дополнительных усилий)</th>
-                 <td>
-                   <select name="q4d">
+                 <td> 
+                   <select name="q4d" required>
                     <option disabled selected value> Выберите ответ </option>
                     <option value="1">Да</option>
                     <option value="2">Нет</option>
@@ -243,7 +243,7 @@
                <tr>
                  <th>Пришлось сократить количество времени, затрачиваемого на работу или другие дела</th>
                  <td>
-                   <select name="q5a">
+                   <select name="q5a" required>
                     <option disabled selected value> Выберите ответ </option>
                     <option value="1">Да</option>
                     <option value="2">Нет</option>
@@ -253,7 +253,7 @@
                <tr>
                  <th>Выполнили меньше, чем хотели</th>
                  <td>
-                   <select name="q5b">
+                   <select name="q5b" required>
                     <option disabled selected value> Выберите ответ </option>
                     <option value="1">Да</option>
                     <option value="2">Нет</option>
@@ -263,7 +263,7 @@
                <tr>
                  <th>Выполняли свою работу или дргие дела не так аккуратно, как обычно</th>
                  <td>
-                   <select name="q5c">
+                   <select name="q5c" required>
                     <option disabled selected value> Выберите ответ </option>
                     <option value="1">Да</option>
                     <option value="2">Нет</option>
@@ -278,7 +278,7 @@
               <th>Насколько ваше физическое или эмоциональное состояние в течении последних 4 недель
               мешало Вам проводить время с семьей, друзьями, соседями или в коллективе? (обведите одну цифру)</th>
             <td>
-              <select name="q6">
+              <select name="q6" required>
                 <option disabled selected value> Выберите ответ </option>
                 <option value="1">Совсем не мешало</option>
                 <option value="2">Немного</option>
@@ -295,7 +295,7 @@
             <tr>
               <th>Насколько сильную физическую боль Вы испытывали за последние 4 недели? (обведите одну цифру)</th>
               <td>
-                <select name="q7">
+                <select name="q7" required>
                   <option disabled selected value> Выберите ответ </option>
                   <option value="1">Совсем не испытывал(а)</option>
                   <option value="2">Очень слабую</option>
@@ -314,7 +314,7 @@
               <th>В какой степени боль в течении последних 4 недель мешала Вам  заниматься Вашей  нормальной работой,
               включая работу вне дома и по дому? (обведите одну цифру)</th>
               <td>
-                <select name="q8">
+                <select name="q8" required>
                   <option disabled selected value> Выберите ответ </option>
                   <option value="1">Совсем не мешала</option>
                   <option value="2">Немного</option>
@@ -339,7 +339,7 @@
                <tr>
                  <th>Вы чувствуете себя бодрым(ой)?</th>
                  <td>
-                   <select name="q9a">
+                   <select name="q9a" required>
                      <option disabled selected value> Выберите ответ </option>
                      <option value="1">Все время</option>
                      <option value="2">Большую часть времени</option>
@@ -353,7 +353,7 @@
                <tr>
                  <th>Вы сильно нервничали?</th>
                  <td>
-                   <select name="q9b">
+                   <select name="q9b" required>
                     <option disabled selected value> Выберите ответ </option>
                     <option value="1">Все время</option>
                     <option value="2">Большую часть времени</option>
@@ -367,7 +367,7 @@
                <tr>
                  <th>Вы чувствуете себя таким(ой) подавленным(ой), что ничего не могло Вас взбодрить?</th>
                  <td>
-                   <select name="q9c">
+                   <select name="q9c" required>
                     <option disabled selected value> Выберите ответ </option>
                     <option value="1">Все время</option>
                     <option value="2">Большую часть времени</option>
@@ -381,7 +381,7 @@
                <tr>
                  <th>Вы чувствовали себя спокойным(ой) и умиротворенным(ой)?</th>
                  <td>
-                   <select name="q9d">
+                   <select name="q9d" required>
                     <option disabled selected value> Выберите ответ </option>
                     <option value="1">Все время</option>
                     <option value="2">Большую часть времени</option>
@@ -395,7 +395,7 @@
                <tr>
                  <th>Вы чувствовали себя полным(ой) сил и энергии?</th>
                  <td>
-                   <select name="q9e">
+                   <select name="q9e" required>
                     <option disabled selected value> Выберите ответ </option>
                     <option value="1">Все время</option>
                     <option value="2">Большую часть времени</option>
@@ -409,7 +409,7 @@
                <tr>
                  <th>Вы чувствовали себя упавшим(ей) духом и печальным(ой)?</th>
                  <td>
-                   <select name="q9f">
+                   <select name="q9f" required>
                     <option disabled selected value> Выберите ответ </option>
                     <option value="1">Все время</option>
                     <option value="2">Большую часть времени</option>
@@ -423,7 +423,7 @@
                <tr>
                  <th>Вы чувствовали себя измученным(ой)?</th>
                  <td>
-                   <select name="q9g">
+                   <select name="q9g" required>
                     <option disabled selected value> Выберите ответ </option>
                     <option value="1">Все время</option>
                     <option value="2">Большую часть времени</option>
@@ -437,7 +437,7 @@
                <tr>
                  <th>Вы чувствовали себя счастливым(ой)?</th>
                  <td>
-                   <select name="q9h">
+                   <select name="q9h" required>
                     <option disabled selected value> Выберите ответ </option>
                     <option value="1">Все время</option>
                     <option value="2">Большую часть времени</option>
@@ -451,7 +451,7 @@
                <tr>
                  <th>Вы чувствовали себя уставшим(ей)?</th>
                  <td>
-                   <select name="q9i">
+                   <select name="q9i" required>
                     <option disabled selected value> Выберите ответ </option>
                     <option value="1">Все время</option>
                     <option value="2">Большую часть времени</option>
@@ -472,7 +472,7 @@
               Например, навещать родственников, друзей и т.п. (обведите одну цифру)</th>
 
             <td>
-              <select name="q10">
+              <select name="q10" required>
                 <option disabled selected value> Выберите ответ </option>
                 <option value="1">Все время</option>
                 <option value="2">Большую часть времени</option>
@@ -494,7 +494,7 @@
                <tr>
                  <th>Мне кажется, что я более склонен к болезням, чем другие</th>
                  <td>
-                   <select name="q11a">
+                   <select name="q11a" required>
                      <option disabled selected value> Выберите ответ </option>
                      <option value="1">Определенно верно</option>
                      <option value="2">В основном верно</option>
@@ -507,7 +507,7 @@
                <tr>
                  <th>Мое здоровье не хуже, чем у большинства моих знакомых</th>
                  <td>
-                   <select name="q11b">
+                   <select name="q11b" required>
                      <option disabled selected value> Выберите ответ </option>
                      <option value="1">Определенно верно</option>
                      <option value="2">В основном верно</option>
@@ -520,7 +520,7 @@
                <tr>
                  <th>Я ожидаю, что мое здоровье ухудшится</th>
                  <td>
-                   <select name="q11c">
+                   <select name="q11c" required>
                      <option disabled selected value> Выберите ответ </option>
                      <option value="1">Определенно верно</option>
                      <option value="2">В основном верно</option>
@@ -533,7 +533,7 @@
                <tr>
                  <th>У меня отличное здоровье</th>
                  <td>
-                   <select name="q11d">
+                   <select name="q11d" required>
                      <option disabled selected value> Выберите ответ </option>
                      <option value="1">Определенно верно</option>
                      <option value="2">В основном верно</option>
@@ -548,48 +548,50 @@
         </li>
       </ol>
 
-      <button id="resultBtn" type="button">Получить результаты</button>
+      <button id="resultBtn" type="button">Сохранить результаты</button>
 
-      <h3>Результаты</h3>
+      <div class="final-results hidden">
+        <h3>Результаты</h3>
 
-      <table class="final">
-        <tr>
-          <th colspan="2">Физический компонент</th>
-          <th colspan="2">Психологический компонент</th>
-        </tr>
-        <tr>
-          <td>Физическое функционирование</td>
-          <td  id="PF">0</td>
-          <td>Психическое здоровье</td>
-          <td  id="MH">0</td>
-        </tr>
-        <tr>
-          <td>Ролевое функционирование, обусловленное физическим состоянием</td>
-          <td id="RP">0</td>
-          <td>Ролевое функционирование, обусловленное эмоциональным состоянием</td>
-          <td id="RE">0</td>
-        </tr>
-        <tr>
-          <td>Интенсивность боли</td>
-          <td id="BP">0</td>
-          <td>Социальное функционирование</td>
-          <td id="SF">0</td>
-        </tr>
-        <tr>
-          <td>Общее состояние здоровья</td>
-          <td id="GH">0</td>
-          <td>Жизненная активность</td>
-          <td id="VT">0</td>
-        </tr>
-        <tr>
-          <th>Результат:</th>
-          <td><input name="PHC" required/></td>
-          <th>Результат:</th>
-          <td><input name="MHC" required/></td>
-        </tr>
-      </table>
+        <table class="final">
+          <tr>
+            <th colspan="2">Физический компонент</th>
+            <th colspan="2">Психологический компонент</th>
+          </tr>
+          <tr>
+            <td>Физическое функционирование</td>
+            <td  id="PF">0</td>
+            <td>Психическое здоровье</td>
+            <td  id="MH">0</td>
+          </tr>
+          <tr>
+            <td>Ролевое функционирование, обусловленное физическим состоянием</td>
+            <td id="RP">0</td>
+            <td>Ролевое функционирование, обусловленное эмоциональным состоянием</td>
+            <td id="RE">0</td>
+          </tr>
+          <tr>
+            <td>Интенсивность боли</td>
+            <td id="BP">0</td>
+            <td>Социальное функционирование</td>
+            <td id="SF">0</td>
+          </tr>
+          <tr>
+            <td>Общее состояние здоровья</td>
+            <td id="GH">0</td>
+            <td>Жизненная активность</td>
+            <td id="VT">0</td>
+          </tr>
+          <tr>
+            <th>Результат:</th>
+            <td><input name="PHC" required/></td>
+            <th>Результат:</th>
+            <td><input name="MHC" required/></td>
+          </tr>
+        </table>
+      </div>
 
-        <div>
+        <div class="hidden">
           <button type="submit" id="excel_btn">Сохранить</button>
         </div>
       </form>
