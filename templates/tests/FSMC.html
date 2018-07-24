@@ -223,23 +223,26 @@
 
         </table>
 
-         <h4>Результаты:</h4>
+        <div class="res hidden">
+          <h4>Результаты:</h4>
 
-         <div class="results">
-           <label for="fsmc_kog">FSMC-ког =</label>
-           <input id="fsmc_kog" type="text" name="kog">
+          <div class="results">
+            <label for="fsmc_kog">FSMC-ког =</label>
+            <input id="fsmc_kog" type="text" name="kog">
+ 
+            <label for="fsmc_mot">FSMC-мот =</label>
+            <input id="fsmc_mot" type="text" name="mot">
+ 
+            <label for="fsmc_total">FSMC-общий =</label>
+            <input id="fsmc_total" type="text" name="total">
+          </div>
+          
+          <button type="submit" id="excel_btn">Сохранить</button>
+        </div>
 
-           <label for="fsmc_mot">FSMC-мот =</label>
-           <input id="fsmc_mot" type="text" name="mot">
-
-           <label for="fsmc_total">FSMC-общий =</label>
-           <input id="fsmc_total" type="text" name="total">
-         </div>
-
-         <div>
-           <button type="submit" id="excel_btn">Сохранить</button>
-         </div>
-         </form>
+        <button type="button" id="submit_btn">Сохранить</button>
+      </form>
+      
 
     </div>
 {% endblock %}

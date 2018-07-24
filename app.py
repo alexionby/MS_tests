@@ -375,7 +375,7 @@ def main():
 
     url = 'http://localhost:5000/'
     webbrowser.open_new_tab(url)
-    app.run(debug=False)
+    app.run(debug=True)
 
 if __name__ == "__main__":
     main()

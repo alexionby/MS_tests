@@ -75,6 +75,6 @@ input:disabled {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 /*# sourceMappingURL=styles.css.map */

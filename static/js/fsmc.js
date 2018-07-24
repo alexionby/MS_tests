@@ -2,7 +2,6 @@ elements = document.getElementsByTagName('input')
 
 var dict = {};
 
-
 for (element of elements) {
 
   element.addEventListener('click', function() {
@@ -44,32 +43,13 @@ for (element of elements) {
   });
 }
 
-/*
-document.getElementById("screen").addEventListener("click", function(){
+submit_btn = document.getElementById("submit_btn");
+submit_btn.addEventListener("click", () => {
 
-  document.body.scrollTop = 0
-  document.body.parentNode.scrollTop = 0
-  html2canvas(document.body, {
-      onrendered: function(canvas) {
-
-          var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-          var a = document.createElement('a');
-          document.body.appendChild(a);
-           a.href = image;
-           let filename = document.getElementsByName('fname')[0].value + '_' + document.getElementsByName('visit_date')[0].value + '.png';
-           a.download = filename;
-           a.click();
-
-
-          let image = canvas.toDataURL();
-          let filledForm = document.forms.mainForm;
-          let formData = new FormData(filledForm);
-          formData.append("screen", image);
-          formData.append("screen_name", "test_name.png")
-
-          var request = new XMLHttpRequest();
-          request.open("POST", "/screen");
-          request.send(formData);
-      }
-  });
-});*/
+  const form = document.querySelector("form");
+  if (form.checkValidity()) {
+    submit_btn.classList.add("hidden");
+    document.querySelector("div.hidden").classList.remove("hidden");
+  }
+  document.getElementById("excel_btn").click();
+});

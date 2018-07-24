@@ -114,10 +114,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.querySelector("input[name='PHC']").value = PHC.toFixed(3);
     document.querySelector("input[name='MHC']").value = MHC.toFixed(3);
 
-    const results = document.querySelector("div.final-results");
-    results.classList.remove("hidden");
-
-    document.querySelector("button[type='submit']").click();
+    const form = document.querySelector("form");
+    if (form.checkValidity()) {
+      document.getElementById('resultBtn').classList.add("hidden");
+      document.querySelector("div.hidden").classList.remove("hidden");
+    }
+    document.getElementById("excel_btn").click();
   })
 
 });

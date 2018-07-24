@@ -199,20 +199,24 @@
 
         </table>
 
-         <h4>Результаты:</h4>
+        <div class="hidden">
+          <h4>Результаты:</h4>
 
-         <div class="results">
-           <label for="hads_dep">Депрессия =</label>
-           <input id="hads_dep" type="text" name="hads_dep">
+          <div class="results">
+            <label for="hads_dep">Депрессия =</label>
+            <input id="hads_dep" type="text" name="hads_dep">
+ 
+            <label for="hads_anx">Тревога =</label>
+            <input id="hads_anx" type="text" name="hads_anx">
+          </div>
 
-           <label for="hads_anx">Тревога =</label>
-           <input id="hads_anx" type="text" name="hads_anx">
-         </div>
+          <div>
+            <button type="submit" id="excel_btn">Сохранить</button>
+          </div>
+        </div>
 
-         <div>
-           <button type="submit" id="excel_btn">Сохранить</button>
-         </div>
-         </form>
+        <button type="button" id="submit_btn">Сохранить</button>
+      </form>
 
     </div>
 {% endblock %}

@@ -28,3 +28,14 @@ for (element of elements) {
     }
   });
 }
+
+submit_btn = document.getElementById("submit_btn");
+submit_btn.addEventListener("click", () => {
+
+  const form = document.querySelector("form");
+  if (form.checkValidity()) {
+    submit_btn.classList.add("hidden");
+    document.querySelector("div.hidden").classList.remove("hidden");
+  }
+  document.getElementById("excel_btn").click();
+});
