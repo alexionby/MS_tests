@@ -79,3 +79,13 @@ input {
 .hidden {
   display: none !important;
 }
+
+.test-select {
+  margin: 9px 0 !important;
+
+  input {
+    color: white;
+    font-size: 1.5rem !important;
+  }
+
+}

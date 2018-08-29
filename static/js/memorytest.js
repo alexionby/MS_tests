@@ -29,3 +29,32 @@ document.addEventListener("DOMContentLoaded", function(event) {
   }
 
 });
+
+
+document.addEventListener("DOMContentLoaded", function(event) {
+
+  const input_all = document.querySelector('input[name="memtest_all"]');
+  const input_correct =  document.querySelector('input[name="memtest_correct"]');
+  const input_wrong = document.querySelector('input[name="memtest_wrong"]');
+
+    /*
+    input_all.addEventListener('change', function(event) {
+      if (Number(input_correct.value) > 0) {
+        input_wrong.value = Number(input_all.value) - Number(input_correct.value);
+      } 
+      else if (Number(input_wrong.value) > 0) {
+        input_correct.value = Number(input_all.value) - Number(input_wrong.value);
+      }
+    })
+    */
+
+    input_wrong.addEventListener('change', function(event) {
+      if (Number(input_correct.value) > 0) {
+        input_all.value = Number(input_wrong.value) + Number(input_correct.value);
+      } 
+      else if (Number(input_all.value) > 0) {
+        input_correct.value = Number(input_all.value) - Number(input_wrong.value);
+      }
+    })
+
+});

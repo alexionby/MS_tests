@@ -12,30 +12,61 @@
     <div class="container">  
       <nav>
         <div class="nav-wrapper">
-          <a href="#!" class="brand-logo excel-logo">Экспорт в excel</a>
+          <a class="brand-logo excel-logo">Экспорт в excel</a>
           <ul class="right">
+
+            <li>
+              <div class="input-field col s3 test-select">
+                  <select>
+                    <option value="" disabled selected>Выберите тест</option>
+                    {% for test_type in unique_tests %}
+                      <option value="{{ test_type }}">{{ test_type.split("(")[-1].split(")")[0] }}</option>
+                    {% endfor %}
+                    <!--
+                    <option value="" disabled selected>Выберите тест</option>
+                    <option value="HPT 9">9 HPT</option>
+                    <option value="PASAT 3">PASAT 3</option>
+                    <option value="Symbol Digit Modalities Test  (SDMT)">SDMT</option>
+                    <option value="25 Foot">25 Foot</option>
+                    <option value="Expanded Disability Status Scale (EDSS)">EDSS</option>
+                    <option value="SF-36">SF-36</option>
+                    <option value="Hospital Anxiety and Depression Scale (HADS)">HADS</option>
+                    <option value="Fatigue Scale for Motor and Cognitive Functions (FSMCF)">FSMCF</option>
+                    -->
+                  </select>
+                  <!--<label>Выберите тест для экспорта:</label>-->
+                </div>
+            </li>
+            <li>
+                <button class="flow-text btn disabled export-btn">Экспорт</button>
+            </li>
+            <!--
             {% for test_name in ['FSMCF', 'HADS', 'SDMT', 'SF-36', '25 Foot', '9 HPT', 'PASAT 3', 'EDSS'] %}
              <li><button class="flow-text btn export-btn" value="{{ test_name }}">{{ test_name }}</button></li>
             {% endfor %}
+            -->
           </ul>
         </div>
       </nav>
 
-      <p class="flow-text">{{ patient.sname }} {{ patient.fname }} {{ patient.lname }}</p>
+      <div class="row">
+        <p id="patient_name" class="flow-text left-align col s8">{{ patient.sname }} {{ patient.fname }} {{ patient.lname }}</p>
+        <p id="patient_birth_date" class="flow-text right-align col s4">{{ patient.birth_date.strftime('%d.%m.%Y') }}</p>
+      </div>
           
-      <ul class="collection">
+      <ul class="collection with-header">
+        <li class="collection-header"><h4>Дата визита / Пройденные тесты</h4></li>
         {% for visit,tests in visit_tests %}
         <li class="collection-item" data-visit="{{ visit.id }}">
           <div class="row mb-0">
-            <p class="col s3 left-align">
-              Дата визита: {{ visit.visit_date.strftime('%d.%m.%Y') }}
-            </p>
-            <p class="col s9 left-align">
-              Проведенные тесты:
+            <a class="col s2 left-align btn disabled">
+              {{ visit.visit_date.strftime('%d.%m.%Y') }}
+            </a>
+            <div class="col s9 offset-s1 right-align">
               {% for test in tests %}
-                <span class="flow-text">{{test.type}}&nbsp;<span>
+                <a class="btn disabled">{{ test.type.split("(")[-1].split(")")[0] }}<a>
               {% endfor %}
-            </p>
+            </div>
           </div>
           {% endfor %}
         </li>

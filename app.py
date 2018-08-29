@@ -2,6 +2,37 @@
 import webbrowser
 import re
 
+PyQt_on = True
+
+import platform
+
+if PyQt_on:
+    import threading
+    from PyQt5.QtCore import QUrl
+    from PyQt5.QtWidgets import *
+    #from PyQt5.QtWebKitWidgets import QWebView
+    from PyQt5.QtWebEngineWidgets import QWebEngineView
+
+# Python 3.6 only
+# Needed imports for cx_freeze to include all necessary
+# modules
+# 
+# Maybe this is not needed
+if int(platform.python_version_tuple()[1]) >= 6:
+    import asyncio
+    import asyncio.base_futures
+    import asyncio.base_tasks
+    import asyncio.compat
+    import asyncio.base_subprocess
+    import asyncio.proactor_events
+    import asyncio.constants
+    import asyncio.selector_events
+    import asyncio.windows_utils
+    import asyncio.windows_events
+
+    import jinja2.asyncsupport
+    import jinja2.ext
+
 from flask import Flask, send_file
 from flask import render_template, request, redirect, url_for, flash
 from flask import jsonify, json
@@ -47,6 +78,20 @@ def visit_to_json(objects):
     
     print(result)
     return jsonify(result)
+
+
+@app.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
+
 
 @app.template_filter('screen_path')
 def reverse_filter(s):
@@ -101,6 +146,7 @@ def visit_view(visit_id):
 
 @app.route('/patient/<patient_id>', methods=['GET','POST'])
 def patient_view(patient_id):
+    unique_tests = set()
     patient = Patient.query.get(patient_id)
     visits = Visit.query.filter_by(patient_id = patient_id).all()
     visit_tests = []
@@ -108,9 +154,12 @@ def patient_view(patient_id):
         tests = []
         tests.append(visit)
         tests.append(BasicTest.query.filter_by(visit_id = visit.id).all())
+        for test in tests[1]:
+            unique_tests.add(test.type)
+        print(unique_tests)
         visit_tests.append(tests)
-    print(visit_tests)
-    return render_template("patient_view.html", visit_tests = visit_tests, patient = patient)
+    print(visit_tests, unique_tests)
+    return render_template("patient_view.html", visit_tests = visit_tests, patient = patient, unique_tests = unique_tests)
 
 @app.route('/to_excel', methods=['GET','POST'])
 def to_excel():
@@ -139,7 +188,9 @@ def to_excel():
         writer.close()
         output.seek(0)
 
-        return send_file(output, attachment_filename="export.xlsx", as_attachment=True)
+        filename = request.form["fname"].replace(" ","_").replace(".","-") + ".xlsx"
+
+        return send_file(output, attachment_filename=filename, as_attachment=True)
 
 def check_form(request, template_path):
     if request.method == 'GET':
@@ -153,7 +204,7 @@ def check_form(request, template_path):
         for key in request.args:
             if request.args[key] == '':
                 OK_FLAG = False
-                flash('Сперва укажите ' + str(key))
+                flash('Укажите ' + str(key))
             else:
                 correct_dict[key] = request.args[key]
         if OK_FLAG == False:
@@ -373,9 +424,22 @@ def main():
     if not 'visits.db' in os.listdir():
         db.create_all()
 
-    url = 'http://localhost:5000/'
-    webbrowser.open_new_tab(url)
-    app.run(debug=True)
+    if PyQt_on:
+
+        thread = threading.Thread(target=app.run, args=['localhost', 5000,False])
+        thread.daemon = True
+        thread.start()
+
+        qt_app = QApplication([])
+        w = QWebEngineView()
+        #w = QWebView()
+        w.load(QUrl('http://localhost:5000'))
+        w.show()
+        qt_app.exec_()
+    else:
+        url = 'http://localhost:5005/'
+        webbrowser.open_new_tab(url)
+        app.run(debug=True, port=5005)
 
 if __name__ == "__main__":
     main()
