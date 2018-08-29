@@ -1,6 +1,7 @@
 ﻿import codecs
 import webbrowser
 import re
+from time import sleep
 
 PyQt_on = True
 
@@ -32,6 +33,7 @@ if int(platform.python_version_tuple()[1]) >= 6:
 
     import jinja2.asyncsupport
     import jinja2.ext
+    import jinja2.asyncfiters
 
 from flask import Flask, send_file
 from flask import render_template, request, redirect, url_for, flash
@@ -60,6 +62,7 @@ from models import Person, Patient, Doctor, Visit
 from models import BasicTest, EDSS, FSMC, Foot25, HADS, MemoryTest, SF36, PASAT3, HPT9
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 1 # disable caching
 app.secret_key = 'test_key'
 
 def visit_to_json(objects):
@@ -92,6 +95,12 @@ def add_header(r):
     r.headers['Cache-Control'] = 'public, max-age=0'
     return r
 
+"""
+@server.after_request
+def add_header(response):
+    response.headers['Cache-Control'] = 'no-store'
+    return response
+"""
 
 @app.template_filter('screen_path')
 def reverse_filter(s):
@@ -419,6 +428,26 @@ def screen():
 
     return redirect(url_for('index'))
 
+def url_ok(url, port):
+    # Use httplib on Python 2
+    try:
+        from http.client import HTTPConnection
+    except ImportError:
+        from httplib import HTTPConnection
+
+    try:
+        conn = HTTPConnection(url, port)
+        conn.request("GET", "/")
+        r = conn.getresponse()
+        return r.status == 200
+    except:
+        pass
+        #logger.exception("Server not started")
+    return False
+
+def run_flask_app():
+    app.run(host="127.0.0.1", port=5000, threaded=True, debug=False)
+
 def main():
 
     if not 'visits.db' in os.listdir():
@@ -426,14 +455,17 @@ def main():
 
     if PyQt_on:
 
-        thread = threading.Thread(target=app.run, args=['localhost', 5000,False])
+        thread = threading.Thread(target=run_flask_app)
         thread.daemon = True
         thread.start()
+
+        while not url_ok("127.0.0.1", 5000):
+            sleep(0.1)
 
         qt_app = QApplication([])
         w = QWebEngineView()
         #w = QWebView()
-        w.load(QUrl('http://localhost:5000'))
+        w.load(QUrl('http://127.0.0.1:5000'))
         w.show()
         qt_app.exec_()
     else:
