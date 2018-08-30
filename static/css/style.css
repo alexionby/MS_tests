@@ -2,11 +2,6 @@ body {
   background-color: lightblue;
 }
 
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
 h2,h3,h4 {
   text-align: center;
 }
@@ -47,11 +42,6 @@ h2,h3,h4 {
   padding: 1.5% 2%;
 }
 
-.tests_list li button {
-  margin: 5px;
-  width: 100%;
-}
-
 * {
   font-family: Trebuchet MS, palatino linotype, sans-serif;
 }
@@ -69,22 +59,22 @@ p {
   display: none;
 }
 
-table {
+.test-table {
   width: 100%;
   font-family: Trebuchet MS, palatino linotype, sans-serif;
   background-color: white;
 }
 
-table tr:nth-child(even) {
+.test-table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-table th {
+.test-table th {
   text-align: left;
   padding: 5px;
 }
 
-table td {
+.test-table td {
   text-align: center;
 }
 
@@ -97,15 +87,7 @@ table td {
 }
 
 input[type='radio'] {
-  transform: scale(1.25);
-}
-
-.center {
-  width: 980px;
-  margin: auto;
-  background-color: lightblue;
-  box-sizing: border-box;
-  padding: 5px;
+  transform: scale(1.75);
 }
 
 .layout2-2 input[type='range'], .layout4-3 input[type='range'] {
@@ -131,41 +113,41 @@ input[type='radio'] {
   vertical-align: middle;
 }
 
-table.final {
+.test-table.final {
   min-width: 400px;
   width: 85%;
   margin: auto;
 }
 
-table.final td:nth-child(2n+1) {
+.test-table.final td:nth-child(2n+1) {
   padding-left: 5px;
   text-align: left;
 }
 
-table.final input {
+.test-table.final input {
   text-align: center;
 }
 
-#test_part, table.symbols {
+#test_part, .test-table.symbols {
   font-size: 24px;
 }
 
-table.layout2-3 tr:nth-child(1) td:nth-child(2), 
-table.layout2-3 tr:nth-child(1) td:nth-child(3) {
+.test-table.layout2-3 tr:nth-child(1) td:nth-child(2), 
+.test-table.layout2-3 tr:nth-child(1) td:nth-child(3) {
   font-weight: bold;
 }
 
-table.layout2-3 td:nth-child(3n + 1) {
+.test-table.layout2-3 td:nth-child(3n + 1) {
   padding-left: 5px;
   text-align: left;
   width: 40%;
 }
 
-table.layout2-3 td:nth-child(3n + 2) {
+.test-table.layout2-3 td:nth-child(3n + 2) {
   width: 5%;
 }
 
-table.layout2-3 td:nth-child(3n + 3) {
+.test-table.layout2-3 td:nth-child(3n + 3) {
   width: 5%;
 }
 
@@ -237,11 +219,11 @@ td input[type='range'] {
   width: 40%;
 }
 
-table.layout2-2 td, table.layout2-3 td, table.layout3-3 td, table.layout4-3 td {
+.test-table.layout2-2 td, .test-table.layout2-3 td, .test-table.layout3-3 td, .test-table.layout4-3 td {
   text-align: left;
 }
 
-table.layout2-2 input, table.layout2-3 input, table.layout3-3 input, table.layout4-3 input {
+.test-table.layout2-2 input, .test-table.layout2-3 input, .test-table.layout3-3 input, .test-table.layout4-3 input {
   text-align: center;
 }
 

@@ -2,7 +2,16 @@ body {
   background-color: lightblue;
 }
 
-table, th, td {
+.center {
+  max-width: 980px;
+  width: 85%;
+  margin: auto;
+  background-color: lightblue;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.test-table th, .test-table td, .test-table {
   border: 1px solid black;
   border-collapse: collapse;
 }
@@ -85,5 +94,10 @@ input:disabled {
 .test-select input {
   color: white;
   font-size: 1.5rem !important;
+}
+
+.tests_list li button {
+  margin-bottom: 5px;
+  width: 100%;
 }
 /*# sourceMappingURL=styles.css.map */

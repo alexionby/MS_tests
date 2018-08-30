@@ -10,13 +10,14 @@
 {% block body %}
 
     <div class="container">
+        <a href="{{ url_for('index')}}#test1">Вернуться к поиску</a>
         <ul class="collapsible">
             {% for test in tests %}
             <li>
                 <div class="collapsible-header">{{ test.type }}</div>
                 <div class="collapsible-body">
                     <!--<span>Lorem ipsum dolor sit amet.</span>-->
-                    <img class="center-image" src={{ test.screenshot_path|screen_path }} />
+                    <img class="materialboxed responsive-img" src={{ test.screenshot_path|screen_path }} />
                     <!--<img src="{{ url_for('static', filename = test.screenshot_path | screen_path ) }}" />-->
                 </div>
             </li>

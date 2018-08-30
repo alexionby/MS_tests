@@ -116,6 +116,38 @@ if (search !== undefined & search !== null) {
 
 document.addEventListener('DOMContentLoaded', function() {
   M.AutoInit();
+
+  options = {"i18n": 
+              {"done": "Принять", 
+               "cancel": "Отменить", 
+               "clear": "Сбросить", 
+               "months": [
+                 "Январь",
+                 "Февраль",
+                 "Март",
+                 "Апрель",
+                 "Май",
+                 "Июнь",
+                 "Июль",
+                 "Август",
+                 "Сентябрь",
+                 "Октябрь",
+                 "Ноябрь",
+                 "Декабрь"
+                ]},
+              
+              "onSelect": function(time) {
+                  const time_input = document.getElementById("birth_date");
+                  time_input.setAttribute("value", time.toLocaleDateString('ru-RU'));
+                  console.log(time_input, time)
+                },
+              "setDefaultDate": true,
+              //"defaultDate": new Date(12,04,1999),
+              }
+
+  const elems = document.querySelector('#birth_datepicker');
+  const instances = M.Datepicker.init(elems, options);
+
 });
 
 /*

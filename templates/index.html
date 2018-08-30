@@ -42,12 +42,12 @@
 
           <div class="input-field col s6">
             <input name="from_date" type="date">
-            <label for="from_date">От</label>
+            <label for="from_date"></label>
           </div>
 
           <div class="input-field col s6">
             <input name="to_date" type="date">
-            <label for="to_date">До</label>
+            <label for="to_date"></label>
           </div>
 
           <div class="center-align"><a id="search" class="waves-effect waves-light btn-large">Поиск</a></div>
@@ -103,9 +103,11 @@
               <div class="">
                 <label for="birth_date">Дата рождения:</label>
                 {% if birth_date %}
-                <input id="birth_date" type="date" name="birth_date" value="{{ birth_date }}">
+                <!--<input type="text" class="datepicker" id="birth_datepicker">-->
+                <input id="birth_date" class=".hide" type="date" name="birth_date" value="{{ birth_date }}">
                 {% else %}
-                <input id="birth_date" type="date" name="birth_date">
+                <!--<input type="text" class="datepicker" id="birth_datepicker">-->
+                <input id="birth_date" class=".hide" type="date" name="birth_date">
                 {% endif %}
               </div>
               

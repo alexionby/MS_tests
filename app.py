@@ -33,7 +33,6 @@ if int(platform.python_version_tuple()[1]) >= 6:
 
     import jinja2.asyncsupport
     import jinja2.ext
-    import jinja2.asyncfiters
 
 from flask import Flask, send_file
 from flask import render_template, request, redirect, url_for, flash
@@ -151,7 +150,7 @@ def search_visit():
 def visit_view(visit_id):
     tests = BasicTest.query.filter_by(visit_id = visit_id).all()
     print(tests)
-    return render_template("visit_view.html", tests = tests)
+    return render_template("visit_view.html", tests = tests, visit_id=visit_id)
 
 @app.route('/patient/<patient_id>', methods=['GET','POST'])
 def patient_view(patient_id):
@@ -275,6 +274,8 @@ def screen():
         name_of_test = request.form['name_of_test']
         if name_of_test not in ['fsmc', 'hads', 'memory_test', 'sf-36', '25_foot', '9_hpt', 'pasat_3', 'neurostatus_scoring']:
             print('error')
+
+        print("birth_date::::::::::::", request.form['birth_date'])
 
         patient = Patient.query.filter_by(fname=request.form['fname'],
                                           sname = request.form['sname'],

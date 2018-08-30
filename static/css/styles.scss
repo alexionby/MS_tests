@@ -3,9 +3,11 @@ body {
   }
 
 
-table, th, td {
+.test-table {    
+    th, td, & {
     border: 1px solid black;
     border-collapse: collapse;
+    }
 }
 
 
@@ -88,4 +90,14 @@ input {
     font-size: 1.5rem !important;
   }
 
+}
+
+.tests_list {
+
+  li {
+    button {
+      margin-bottom: 5px;
+      width: 100%;
+    }
+  }
 }

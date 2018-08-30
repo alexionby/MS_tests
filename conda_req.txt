@@ -1,0 +1,3 @@
+# packages in environment at C:\Users\GlinskyAV\AppData\Local\Continuum\anaconda3\envs\pyqt_pip:
+#
+# Name                    Version                   Build  Channel
