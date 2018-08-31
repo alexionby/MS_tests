@@ -103,13 +103,19 @@
               <div class="">
                 <label for="birth_date">Дата рождения:</label>
                 {% if birth_date %}
-                <!--<input type="text" class="datepicker" id="birth_datepicker">-->
-                <input id="birth_date" class=".hide" type="date" name="birth_date" value="{{ birth_date }}">
+                <input type="text" class="datepicker" id="birth_date_picker">
+                <input id="birth_date" class="hide" type="text" name="birth_date" value="{{ birth_date }}">
                 {% else %}
-                <!--<input type="text" class="datepicker" id="birth_datepicker">-->
-                <input id="birth_date" class=".hide" type="date" name="birth_date">
+                <input type="text" class="datepicker" id="birth_date_picker">
+                <input id="birth_date" class="hide" type="text" name="birth_date">
                 {% endif %}
               </div>
+              
+              <!--
+              <div>
+                <input type="text" class="datepicker" id="birth_date_picker">
+              </div>
+              -->
               
               <div class="row botm-0 topp-10 botp-10">
                 <span class="col s2">Пол:</span>

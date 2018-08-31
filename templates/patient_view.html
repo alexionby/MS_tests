@@ -10,12 +10,17 @@
 {% block body %}
 
     <div class="container"> 
-      <a href="{{ url_for('index')}}#test1">Вернуться к поиску</a>
       <nav>
         <div class="nav-wrapper">
-          <a class="brand-logo excel-logo">Экспорт в excel</a>
+          <ul class="left">
+            <li>
+                <a class="btn waves-effect waves-light" href="{{ url_for('index')}}#test1">Вернуться к поиску</a>
+            </li>
+          </ul>
           <ul class="right">
-
+            <li>
+              <span class="flow-text pr-20">Экспорт в MS Excel:&nbsp;</span>
+            </li>
             <li>
               <div class="input-field col s3 test-select">
                   <select>

@@ -2,15 +2,6 @@ body {
   background-color: lightblue;
 }
 
-.center {
-  max-width: 980px;
-  width: 85%;
-  margin: auto;
-  background-color: lightblue;
-  box-sizing: border-box;
-  padding: 5px;
-}
-
 .test-table th, .test-table td, .test-table {
   border: 1px solid black;
   border-collapse: collapse;
@@ -81,6 +72,10 @@ input:disabled {
 
 .mb-0 {
   margin-bottom: 0 !important;
+}
+
+.pr-20 {
+  padding-right: 20px;
 }
 
 .hidden {

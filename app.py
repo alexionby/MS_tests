@@ -449,6 +449,10 @@ def url_ok(url, port):
 def run_flask_app():
     app.run(host="127.0.0.1", port=5000, threaded=True, debug=False)
 
+def _downloadRequested(item): # QWebEngineDownloadItem
+    print('downloading to', item.path())
+    item.accept()
+
 def main():
 
     if not 'visits.db' in os.listdir():
@@ -467,12 +471,15 @@ def main():
         w = QWebEngineView()
         #w = QWebView()
         w.load(QUrl('http://127.0.0.1:5000'))
+
+        w.page().profile().downloadRequested.connect(_downloadRequested)
+
         w.show()
         qt_app.exec_()
     else:
         url = 'http://localhost:5005/'
         webbrowser.open_new_tab(url)
-        app.run(debug=True, port=5005)
+        app.run(debug=False, port=5005)
 
 if __name__ == "__main__":
     main()
