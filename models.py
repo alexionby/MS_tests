@@ -17,9 +17,9 @@ class Person(db.Model):
 
     __tablename__ = 'person'
     id = db.Column(db.Integer, primary_key=True)
-    fname = db.Column(db.String(30), nullable=False)
-    sname = db.Column(db.String(30), nullable=False)
-    lname = db.Column(db.String(30), nullable=False)
+    fname = db.Column(db.String(50), nullable=False)
+    sname = db.Column(db.String(50), nullable=False)
+    lname = db.Column(db.String(50), nullable=False)
     type = db.Column(db.String(50))
 
     __mapper_args__ = {
@@ -44,7 +44,7 @@ class Patient(Person):
 class Doctor(Person):
 
     id = db.Column(db.Integer, db.ForeignKey('person.id'), primary_key=True)
-    clinic = db.Column(db.Integer)
+    clinic = db.Column(db.String(50))
     __mapper_args__ = {
         'polymorphic_identity':'doctor'
     }
@@ -193,7 +193,7 @@ class HPT9(BasicTest):
     attempt_sec_hand_1 = db.Column(db.Float)
     attempt_sec_hand_2 = db.Column(db.Float)
     note_sec = db.Column(db.Text)
-
+    
 
     __mapper_args__ = {
         'polymorphic_identity':'HPT 9',

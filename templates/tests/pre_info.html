@@ -28,12 +28,32 @@
     </div>
 
     <div class="formLine">
-      <label for="birth_date">Дата рождения:</label>
-      {% if birth_date %}
-      <input id="birth_date" type="text" name="birth_date" value="{{ birth_date }}">
-      {% else %}
-      <input id="birth_date" type="text" name="birth_date">
-      {% endif %}
+      <div class="row">
+        <div class="input-field col s4">
+          <label for="birth_day">День</label>
+          {% if birth_day %}
+          <input id="birth_day" name="birth_day" type="number" class="validate" min="1" max="31" value="{{ birth_day }}">
+          {% else %}
+          <input id="birth_day" name="birth_day" type="number" class="validate" min="1" max="31">
+          {% endif %}
+        </div>
+        <div class="input-field col s4">
+          <label for="birth_month">Месяц</label>
+          {% if birth_month %}
+          <input id="birth_month" name="birth_month" type="number" class="validate" min="1" max="12" value="{{ birth_month }}">
+          {% else %}
+          <input id="birth_month" name="birth_month" type="number" class="validate" min="1" max="12">
+          {% endif %}
+        </div>
+        <div class="input-field col s4">
+          <label for="birth_year">Год</label>
+          {% if birth_year %}
+          <input id="birth_year" name="birth_year" type="number" class="validate"  min="1900" max="2050" value="{{ birth_year }}">
+          {% else %}
+          <input id="birth_year" name="birth_year" type="number" class="validate" min="1900" max="2050">
+          {% endif %}
+        </div>
+      </div>
     </div>
 
     <div class="formLine">
@@ -93,12 +113,31 @@
   </div>
 
   <div class="formLine">
-    <label for="visit_date">Дата визита:</label>
-    {% if visit_date %}
-    <input id="visit_date" type="date" name="visit_date" value="{{ visit_date }}">
-    {% else %}
-    <input id="visit_date" type="date" name="visit_date">
-    {% endif%}
+    <div class="row">
+      <div class="input-field col s4">
+        <label for="visit_day">День</label>
+        {% if visit_day %}
+        <input id="visit_day" name="visit_day" type="number" class="validate" min="1" max="31" value="{{ visit_day}}">
+        {% else %}
+        <input id="visit_day" name="visit_day" type="number" class="validate" min="1" max="31">
+        {% endif %}
+      </div>
+      <div class="input-field col s4">
+        <label for="visit_month">Месяц</label>
+        {% if visit_month %}
+        <input id="visit_month" name="visit_month" type="number" class="validate" min="1" max="12" value="{{ visit_month}}">
+        {% else %}
+        <input id="visit_month" name="visit_month" type="number" class="validate" min="1" max="12">
+        {% endif %}
+      </div>
+      <div class="input-field col s4">
+        <label for="visit_year">Год</label>
+        {% if visit_year %}
+        <input id="visit_year" name="visit_year" type="number" class="validate"  min="1900" max="2050" value="{{ visit_year}}">
+        {% else %}
+        <input id="visit_year" name="visit_year" type="number" class="validate"  min="1900" max="2050">
+        {% endif%}
+      </div>
+    </div>
   </div>
-
 </fieldset>

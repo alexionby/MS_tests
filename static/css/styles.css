@@ -51,6 +51,7 @@ select {
   height: 100%;
   text-align: center;
   border: none;
+  font-size: 1rem;
 }
 
 input:disabled {
@@ -94,5 +95,32 @@ input:disabled {
 .tests_list li button {
   margin-bottom: 5px;
   width: 100%;
+}
+
+.col-header li *:first-child {
+  border-right: 1px solid #e0e0e0;
+}
+
+.col-header li *:last-child {
+  border-left: 1px solid #e0e0e0;
+}
+
+ul.flashes {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+ul.flashes li {
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 2.5px;
+  font-weight: bold;
 }
 /*# sourceMappingURL=styles.css.map */

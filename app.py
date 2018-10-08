@@ -3,7 +3,7 @@ import webbrowser
 import re
 from time import sleep
 
-PyQt_on = True
+PyQt_on = False
 
 import platform
 
@@ -13,6 +13,7 @@ if PyQt_on:
     from PyQt5.QtWidgets import *
     #from PyQt5.QtWebKitWidgets import QWebView
     from PyQt5.QtWebEngineWidgets import QWebEngineView
+    from PyQt5 import QtGui
 
 # Python 3.6 only
 # Needed imports for cx_freeze to include all necessary
@@ -200,23 +201,40 @@ def to_excel():
 
         return send_file(output, attachment_filename=filename, as_attachment=True)
 
+def check_arg(req, arg, message, arg_dict, flag):
+    if arg not in request.args or request.args[arg] == '':
+        flag = False
+        flash(message)
+    else:
+        arg_dict[arg] = req.args[arg]
+
+    return flag
+
 def check_form(request, template_path):
     if request.method == 'GET':
         OK_FLAG = True
         correct_dict = {}
-        if 'sex' not in request.args:
-            OK_FLAG = False
-            flash('Укажите пол!')
-        else:
-            correct_dict['sex'] = request.args['sex']
-        for key in request.args:
-            if request.args[key] == '':
-                OK_FLAG = False
-                flash('Укажите ' + str(key))
-            else:
-                correct_dict[key] = request.args[key]
+
+        OK_FLAG = check_arg(request, 'sex', 'Укажите пол пациента!', correct_dict, OK_FLAG)
+        OK_FLAG = check_arg(request, 'fname', 'Укажите имя пациента!', correct_dict, OK_FLAG)
+        OK_FLAG = check_arg(request, 'sname', 'Укажите фамилию пациента!', correct_dict, OK_FLAG)
+        OK_FLAG = check_arg(request, 'lname', 'Укажите отчество пациента!', correct_dict, OK_FLAG)
+        OK_FLAG = check_arg(request, 'spec_fname', 'Укажите имя специалиста!', correct_dict, OK_FLAG)
+        OK_FLAG = check_arg(request, 'spec_sname', 'Укажите фамилию специалиста!', correct_dict, OK_FLAG)
+        OK_FLAG = check_arg(request, 'spec_lname', 'Укажите отчество специалиста!', correct_dict, OK_FLAG)
+        OK_FLAG = check_arg(request, 'clinic', 'Укажите номер поликлиники!', correct_dict, OK_FLAG)
+        #OK_FLAG = check_arg(request, 'birth_date', 'Укажите дату рождения!', correct_dict, OK_FLAG)
+        #OK_FLAG = check_arg(request, 'visit_date', 'Укажите дату визита!', correct_dict, OK_FLAG)
+        OK_FLAG = check_arg(request, 'birth_day', 'Укажите день рождения!', correct_dict, OK_FLAG)
+        OK_FLAG = check_arg(request, 'birth_month', 'Укажите месяц рождения!', correct_dict, OK_FLAG)
+        OK_FLAG = check_arg(request, 'birth_year', 'Укажите год рождения!', correct_dict, OK_FLAG)
+        OK_FLAG = check_arg(request, 'visit_day', 'Укажите день визита!', correct_dict, OK_FLAG)
+        OK_FLAG = check_arg(request, 'visit_month', 'Укажите месяц визита!', correct_dict, OK_FLAG)
+        OK_FLAG = check_arg(request, 'visit_year', 'Укажите год визита!', correct_dict, OK_FLAG)
+
         if OK_FLAG == False:
             return render_template('index.html', **correct_dict)
+
     return render_template(template_path, **correct_dict)
 
 @app.route('/', methods=['GET','POST'])
@@ -267,28 +285,38 @@ def allowed_file(filename):
 
 @app.route('/screen', methods=['POST'])
 def screen():
+
+    print("from screen")
+    print(request.method)
+
     if request.method == 'POST':
-        
-        #[print(key) for key in request.form.keys()]
 
         name_of_test = request.form['name_of_test']
         if name_of_test not in ['fsmc', 'hads', 'memory_test', 'sf-36', '25_foot', '9_hpt', 'pasat_3', 'neurostatus_scoring']:
             print('error')
 
-        print("birth_date::::::::::::", request.form['birth_date'])
+        print("Here")
+        
+        birth_day = int(request.form['birth_day'])
+        birth_month = int(request.form['birth_month'])
+        birth_year = int(request.form['birth_year'])
+        
+        birth_date = datetime(birth_year, birth_month, birth_day)
+        print(birth_date)
 
-        patient = Patient.query.filter_by(fname=request.form['fname'],
-                                          sname = request.form['sname'],
-                                          lname = request.form['lname'],
-                                          birth_date = datetime.strptime(request.form['birth_date'], '%Y-%m-%d')).first()
+        patient = Patient.query.filter_by(fname=request.form['fname'].lower(),
+                                          sname = request.form['sname'].lower(),
+                                          lname = request.form['lname'].lower(),
+                                          birth_date = birth_date
+                                          ).first()
 
         if not patient:
 
             patient = Patient(
-                fname=request.form['fname'],
-                sname = request.form['sname'],
-                lname = request.form['lname'],
-                birth_date = datetime.strptime(request.form['birth_date'], '%Y-%m-%d'),
+                fname=request.form['fname'].lower(),
+                sname = request.form['sname'].lower(),
+                lname = request.form['lname'].lower(),
+                birth_date = birth_date,
                 sex = True if request.form['sex'] == "male" else False,
             )
 
@@ -298,17 +326,17 @@ def screen():
         else:
             print("Patient Existed")
         
-        doctor = Doctor.query.filter_by(fname=request.form['spec_fname'],
-                                        sname = request.form['spec_sname'],
-                                        lname = request.form['spec_lname'],
-                                        clinic = int(request.form['clinic'])).first()
+        doctor = Doctor.query.filter_by(fname=request.form['spec_fname'].lower(),
+                                        sname = request.form['spec_sname'].lower(),
+                                        lname = request.form['spec_lname'].lower(),
+                                        clinic = request.form['clinic'].lower()).first()
         
         if not doctor:
 
-            doctor = Doctor(fname=request.form['spec_fname'],
-                            sname = request.form['spec_sname'],
-                            lname = request.form['spec_lname'],
-                            clinic = int(request.form['clinic']))
+            doctor = Doctor(fname=request.form['spec_fname'].lower(),
+                            sname = request.form['spec_sname'].lower(),
+                            lname = request.form['spec_lname'].lower(),
+                            clinic = request.form['clinic'].lower())
             
             db.session.add(doctor)
             db.session.commit()
@@ -316,15 +344,23 @@ def screen():
         else:
             print("Doctor Existed")
 
+        visit_day = int(request.form['visit_day'])
+        visit_month = int(request.form['visit_month'])
+        visit_year = int(request.form['visit_year'])
+        
+        visit_date = datetime(visit_year, visit_month, visit_day)
+        print(visit_date)
+
         visit = Visit.query.filter_by(patient_id = patient.id,
                                        doctor_id = doctor.id,
-                                       visit_date = datetime.strptime(request.form['visit_date'], '%Y-%m-%d')).first()
+                                       visit_date = visit_date
+                                       ).first()
 
         if not visit:
 
             visit = Visit(patient_id = patient.id,
                           doctor_id = doctor.id,
-                          visit_date = datetime.strptime(request.form['visit_date'], '%Y-%m-%d'))
+                          visit_date = visit_date)
 
             db.session.add(visit)
             db.session.commit()
@@ -372,7 +408,7 @@ def screen():
             test_summary = Foot25(visit_id = visit.id, 
                                 screenshot_path = screen_name,
                                 foot25_try1 = float(request.form['foot25_try1']),
-                                foot25_try2 = float(request.form['foot25_try1']),
+                                foot25_try2 = float(request.form['foot25_try2']),
                                 foot25_tools = request.form['foot25_tools'],
                                 foot25_addition = request.form['foot25_addition'])
 
@@ -468,18 +504,19 @@ def main():
             sleep(0.1)
 
         qt_app = QApplication([])
+        qt_app.setWindowIcon(QtGui.QIcon("brain.ico"))
+        qt_app.setApplicationName("Рассеянный склероз: тесты/опросники")
+
         w = QWebEngineView()
         #w = QWebView()
         w.load(QUrl('http://127.0.0.1:5000'))
-
         w.page().profile().downloadRequested.connect(_downloadRequested)
-
         w.show()
         qt_app.exec_()
     else:
         url = 'http://localhost:5005/'
         webbrowser.open_new_tab(url)
-        app.run(debug=False, port=5005)
+        app.run(debug=True, port=5005)
 
 if __name__ == "__main__":
     main()

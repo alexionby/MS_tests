@@ -39,15 +39,17 @@
           </div>
 
           <h5 class="red-text text-lighten-2 center-align">Примерная дата визита:</h5>
-
+          
+          <input id="from_date" name="from_date" class="hide" type="text">
           <div class="input-field col s6">
-            <input name="from_date" type="date">
-            <label for="from_date"></label>
+            <input type="text" class="datepicker" id="from_date_picker">
+            <label for="from_date_picker">От</label>
           </div>
 
+          <input id="to_date" name="to_date" class="hide" type="text">
           <div class="input-field col s6">
-            <input name="to_date" type="date">
-            <label for="to_date"></label>
+            <input type="text" class="datepicker" id="to_date_picker">
+            <label for="to_date_picker">До</label>
           </div>
 
           <div class="center-align"><a id="search" class="waves-effect waves-light btn-large">Поиск</a></div>
@@ -57,8 +59,15 @@
 
       <h4 class="red-text text-lighten-1">Результаты</h4>
         <div class="whitecard pad-5">
+          <ul class="collection col-header">
+              <li class="collection-item row">
+                  <span class="col s3 left-align">ФИО пациента</span>
+                  <span class="col s3 right-align">Дата Рождения</span>
+                  <span class="col s3 left-align">Дата визита</span>
+                  <span class="col s3 right-align">Детали визита</span>
+                </li>
+          </ul>
           <ul id="search_results" class="collection">
-            
           </ul>
         </div>
       </div>
@@ -68,6 +77,15 @@
 
     <div id="test2" class="col s12">
       <h4 class="red-text text-lighten-1">Заполните анкету:</h4>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul class=flashes>
+          {% for message in messages %}
+            <li class="red lighten-2">{{ message }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
       <div class="row flex">
         <form action="{{ url_for('index') }}" method="get">
           <div class="col s6">
@@ -100,6 +118,7 @@
                 {% endif %}
               </div>
 
+              <!--
               <div class="">
                 <label for="birth_date">Дата рождения:</label>
                 {% if birth_date %}
@@ -109,6 +128,37 @@
                 <input type="text" class="datepicker" id="birth_date_picker">
                 <input id="birth_date" class="hide" type="text" name="birth_date">
                 {% endif %}
+              </div>
+              -->
+
+              <div>
+                <label for="">Дата рождения</label>
+                <div class="row">
+                  <div class="input-field col s4">
+                    <label for="birth_day">День</label>
+                    {% if birth_day %}
+                    <input id="birth_day" name="birth_day" type="number" class="validate" min="1" max="31" value="{{ birth_day }}">
+                    {% else %}
+                    <input id="birth_day" name="birth_day" type="number" class="validate" min="1" max="31">
+                    {% endif %}
+                  </div>
+                  <div class="input-field col s4">
+                    <label for="birth_month">Месяц</label>
+                    {% if birth_month %}
+                    <input id="birth_month" name="birth_month" type="number" class="validate" min="1" max="12" value="{{ birth_month }}">
+                    {% else %}
+                    <input id="birth_month" name="birth_month" type="number" class="validate" min="1" max="12">
+                    {% endif %}
+                  </div>
+                  <div class="input-field col s4">
+                    <label for="birth_year">Год</label>
+                    {% if birth_year %}
+                    <input id="birth_year" name="birth_year" type="number" class="validate"  min="1900" max="2050" value="{{ birth_year }}">
+                    {% else %}
+                    <input id="birth_year" name="birth_year" type="number" class="validate" min="1900" max="2050">
+                    {% endif %}
+                  </div>
+                </div>
               </div>
               
               <!--
@@ -190,32 +240,55 @@
             </div>
           </div>
 
+          <!--
           <div class="whitecard pad-10 topm-10">
             <label for="visit_date">Дата визита:</label>
             <div class="input-field">
               {% if visit_date %}
-              <input id="visit_date" type="date" name="visit_date" value="{{ visit_date }}">
+              <input type="text" class="datepicker" id="visit_date_picker">
+              <input id="visit_date" class="hide" type="text" name="visit_date" value="{{ visit_date }}">
               {% else %}
-              <input id="visit_date" type="date" name="visit_date">
-              {% endif%}
+              <input type="text" class="datepicker" id="visit_date_picker">
+              <input id="visit_date" class="hide" type="text" name="visit_date">
+              {% endif %}
+            </div>
+          </div>-->
+
+          <div class="whitecard pad-10 topm-10">
+            <h5 class="center-align red-text text-lighten-2">Дата визита</h5>
+            <div class="row">
+              <div class="input-field col s4">
+                <label for="visit_day">День</label>
+                {% if visit_day %}
+                <input id="visit_day" name="visit_day" type="number" class="validate" min="1" max="31" value="{{ visit_day}}">
+                {% else %}
+                <input id="visit_day" name="visit_day" type="number" class="validate" min="1" max="31">
+                {% endif %}
+              </div>
+              <div class="input-field col s4">
+                <label for="visit_month">Месяц</label>
+                {% if visit_month %}
+                <input id="visit_month" name="visit_month" type="number" class="validate" min="1" max="12" value="{{ visit_month}}">
+                {% else %}
+                <input id="visit_month" name="visit_month" type="number" class="validate" min="1" max="12">
+                {% endif %}
+              </div>
+              <div class="input-field col s4">
+                <label for="visit_year">Год</label>
+                {% if visit_year %}
+                <input id="visit_year" name="visit_year" type="number" class="validate"  min="1900" max="2050" value="{{ visit_year}}">
+                {% else %}
+                <input id="visit_year" name="visit_year" type="number" class="validate"  min="1900" max="2050">
+                {% endif%}
+              </div>
             </div>
           </div>
-
         </div>
       </div>
 
       <h4 class="red-text text-lighten-1">Выбор теста</h4>
 
       <div class="whitecard pad-10">
-          {% with messages = get_flashed_messages() %}
-            {% if messages %}
-              <ul class=flashes>
-              {% for message in messages %}
-                <li>{{ message }}</li>
-              {% endfor %}
-              </ul>
-            {% endif %}
-          {% endwith %}
     
           <h5 class="center-align red-text text-lighten-2">Тесты для заполнения врачом:</h5>
 
@@ -249,8 +322,5 @@
     {% endblock %}
 
     {% block script %}
-
       <script src="{{ url_for('static', filename='js/materialize/materialize.min.js') }}"></script>
-      <script src="{{ url_for('static', filename='js/index.js') }}"></script>
-
     {% endblock %}

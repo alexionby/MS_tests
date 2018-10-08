@@ -96,8 +96,8 @@ if (search !== undefined & search !== null) {
   
         let test_card = document.createElement('li');
         test_card.classList.add('collection-item', 'row');
-        test_card.innerHTML = (`<a href="${ patient_link }" class='col s4'>${ visit.id + '. ' + patient.sname + ' ' + patient.fname + ' ' + patient.lname }</a>
-                                <span class='col s2'>${ birth_date.toLocaleDateString('ru-RU') }</span>
+        test_card.innerHTML = (`<a href="${ patient_link }" class='col s4'>${ /*visit.id + '. ' +*/ patient.sname + ' ' + patient.fname + ' ' + patient.lname }</a>
+                                <span class='col s2 right-align'>${ birth_date.toLocaleDateString('ru-RU') }</span>
                                 <!--<a href="${patient_link}" class='col s3'>${ visit.doctor_sname + ' ' + visit.doctor_fname + ' ' + visit.doctor_lname }</a>-->
                                 <span class='col s2'>${ visit_date.toLocaleDateString('ru-RU') }</span>
                                   <!--<ul>
@@ -114,97 +114,37 @@ if (search !== undefined & search !== null) {
   });
 }
 
-const localOptions = {"done": "Принять", 
-                      "cancel": "Отменить", 
-                      "clear": "Сбросить", 
-                      "months": [
-                        "Январь",
-                        "Февраль",
-                        "Март",
-                        "Апрель",
-                        "Май",
-                        "Июнь",
-                        "Июль",
-                        "Август",
-                        "Сентябрь",
-                        "Октябрь",
-                        "Ноябрь",
-                        "Декабрь"
-                      ],
-                      monthsShort: [
-                        "Янв",
-                        "Фев",
-                        "Мар",
-                        "Апр",
-                        "Май",
-                        "Июн",
-                        "Июл",
-                        "Авг",
-                        "Сен",
-                        "Окт",
-                        "Ноя",
-                        "Дек"
-                      ],
-                      weekdays: [
-                        "Понедельник",
-                        "Вторник",
-                        "Среда",
-                        "Четверг",
-                        "Пятница",
-                        "Суббота",
-                        "Воскресенье"
-                      ],
-                      weekdaysShort: [
-                        "Пн",
-                        "Вт",
-                        "Ср",
-                        "Чт",
-                        "Пт",
-                        "Сб",
-                        "Вс"
-                      ],
-                      weekdaysAbbrev: [
-                        "Пн",
-                        "Вт",
-                        "Ср",
-                        "Чт",
-                        "Пт",
-                        "Сб",
-                        "Вс"
-                      ]
-                      }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function(event) {
+
   M.AutoInit();
-
   
+  /*
 
-  birth_date_options = { i18n: localOptions, 
-              onSelect: function(time) {
-                  const time_input = document.getElementById("birth_date");
-                  const date = time.getFullYear() + '-' + (time.getMonth()+1) + '-' + time.getDate();
-                  time_input.setAttribute("value", date); //time.toLocaleDateString('ru-RU'));
-                  console.log(time_input, time, date)
-                },
-              defaultDate: new Date(document.getElementById("birth_date").value),
-              setDefaultDate: true,
-              showClearBtn: true
-              }
+  let date = new Date();
+  let year = ('0000' + date.getFullYear()).slice(-4);
+  let month = date.getMonth() + 1
+  month = ('0' + month).slice(-2);
+  let day = ('0' + date.getDate()).slice(-2);
+
+  console.log(year + '-' + month + '-' + day);
+  document.getElementById('visit_date').value = year + '-' + month + '-' + day;
+
+  */
   
-  visit_date_options = { i18n: localOptions, 
-    onSelect: function(time) {
-        const time_input = document.getElementById("visit_date");
-        time_input.setAttribute("value", time.toLocaleDateString('ru-RU'));
-        console.log(time_input, time)
-        },
-        defaultDate: new Date(),
-        setDefaultDate: true,
-        showClearBtn: true
-        }
+  const spec_input = document.querySelectorAll("input[name^='spec_'], input[name='clinic']");
+  for (input of spec_input) {
+    console.log(input)
+    const value = localStorage.getItem(input.name);
+    if (value) {
+      input.value = value;
+      input.previousElementSibling.classList.add("active");
+    }
 
-  let birth_date = document.querySelector('#birth_date_picker');
-  birth_date = M.Datepicker.init(birth_date, birth_date_options);
-
+    input.addEventListener("change", (event) => {
+      localStorage.setItem(event.target.name, event.target.value);
+    });
+  }
 });
 
 /*
