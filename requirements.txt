@@ -139,7 +139,7 @@ pythonnet==2.3.0
 pytz==2017.2
 PyWavelets==0.5.2
 pywebview==2.0.3
-pywin32==221
+pywin32==301
 PyYAML==3.12
 pyzmq==16.0.2
 QtAwesome==0.4.4
